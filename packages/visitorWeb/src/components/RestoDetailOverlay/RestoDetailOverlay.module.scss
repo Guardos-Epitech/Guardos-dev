@@ -3,6 +3,7 @@
 
 .FlexParent {
   display: flex;
+  padding-bottom: 0.5rem;
 }
 
 .GridItem {
@@ -31,7 +32,7 @@
   text-align: justify;
   text-justify: inter-word;
   font-family: "Montserrat", sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-bottom: 0.4rem;
   margin-top: 0.4rem;
 }
@@ -51,4 +52,15 @@
   margin-right: 0 !important;
   margin-left: auto !important;
   padding: 0.2rem 0.8rem !important;
+}
+
+.OpeningHours {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  margin: 0.1rem 0 0 0.3rem;
+  padding-top: 1rem;
+}
+
+.OpeningHoursColumn {
+  padding: 0 0.6rem;
 }

@@ -71,10 +71,10 @@
 .BtnPage {
   display: flex;
   padding-top: 0.3rem;
+  float: right;
 }
 
 .RestoBtn {
-  margin-right: 0 !important;
-  margin-left: auto !important;
+  margin: 0 0.3rem !important;
   padding: 0.2rem 0.8rem !important;
 }
