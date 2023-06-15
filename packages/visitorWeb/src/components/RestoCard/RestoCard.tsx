@@ -113,7 +113,7 @@ const RestoCard = (props: IRestoCardProps) => {
           </div>
         </Grid>
       </Grid>
-      {isDetailPageOpen ? <RestoDetailOverlay restaurant={props.resto} onClose={() => setIsDetailPageOpen(false)} /> : null}
+      {isDetailPageOpen && <RestoDetailOverlay restaurant={props.resto} onClose={() => setIsDetailPageOpen(false)} />}
     </Paper>
   );
 };
