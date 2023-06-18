@@ -2,14 +2,18 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY . /app
+COPY packages/backend /app
 
-RUN npm i ts-node@latest
+COPY packages/shared ../shared
 
-RUN npm install
+RUN npm install -g ts-node
+
+RUN npm install -g typescript
+
+RUN npm install -g --save-dev ts-node typescript
+
+RUN npm install 
 
 EXPOSE 8081
 
 CMD ["npm", "run", "start:app"]
-# TODO: from guardos resto BE, line was:
-# CMD ["npm", "run", "dev"]
