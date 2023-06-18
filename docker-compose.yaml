@@ -1,28 +1,28 @@
 services:
   backend:
-    build : backend/
+    build : ./packages/backend
     ports:
       - "8081:8081"
     volumes:
-      - ./src/backend:/app
+      - ./packages/backend:/app
   visitor_web:
-    build: ./src/frontend/visitorWeb
+    build: ./packages/visitorWeb
     depends_on:
     - backend
     ports:
       - "8080:8080"
     volumes:
-      - ./src/frontend/visitorWeb/src:/app/src
+      - ./packages/visitorWeb/src:/app/src
   resto_web:
-    build: ./src/frontend/restoWeb/
+    build: ./packages/restoWeb
     depends_on:
     - backend
     ports:
       - "8082:8082"
     volumes:
-      - ./src/frontend/restoWeb/src:/app/src
+      - ./packages/restoWeb/src:/app/src
   resto_mobile:
-    build : mobile/
+    build : ./packages/restoMobile
     volumes:
-      - ./src/frontend/restoMobile:/app
+      - ./packages/restoMobile:/app
       
