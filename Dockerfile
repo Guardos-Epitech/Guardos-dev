@@ -10,6 +10,7 @@ COPY package.json package-lock.json /app/
 # Copy lerna.json file
 COPY lerna.json /app/
 
+RUN npm install -g npm@9.7.1
 # Install lerna globally
 RUN npm install -g lerna
 
