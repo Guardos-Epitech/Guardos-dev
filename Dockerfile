@@ -4,8 +4,8 @@ FROM node:latest
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json files
-COPY package.json package-lock.json /app/
+# Copy package.json file
+COPY package.json /app/
 
 # Copy lerna.json file
 COPY lerna.json /app/
