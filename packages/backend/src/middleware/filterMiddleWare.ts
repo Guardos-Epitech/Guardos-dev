@@ -104,6 +104,7 @@ export const getSelectedFilterReq =
   async function (filters: ISearchCommunication) {
     const filter = new Filter();
     const restaurants = await readAndGetAllRestaurants();
+    console.log(restaurants);
     let filteredRestaurants: IRestaurantBackEnd[] = [];
     const result: IRestaurantFrontEnd[] = [];
     for (const elem of restaurants) {
@@ -133,11 +134,13 @@ export const getSelectedFilterReq =
       );
     }
 
-    if (filters.location) {
-      filteredRestaurants = filteredRestaurants.filter((restaurant) =>
-        restaurant.location.city.toLowerCase()
-          .includes(filters.location.toLowerCase())
-      );
+    if (filters.location !== undefined) {
+      filteredRestaurants = filteredRestaurants.filter((restaurant) => {
+        if (restaurant.location.city === undefined) {
+          return false;
+        }
+        return restaurant.location.city.toLowerCase().includes(filters.location.toLowerCase());
+      });
     }
 
     // Filter by rating
