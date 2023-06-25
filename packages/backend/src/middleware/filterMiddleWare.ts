@@ -102,9 +102,9 @@ export const handleFilterRequest =
 
 export const getSelectedFilterReq =
   async function (filters: ISearchCommunication) {
+    console.log(filters);
     const filter = new Filter();
     const restaurants = await readAndGetAllRestaurants();
-    console.log(restaurants);
     let filteredRestaurants: IRestaurantBackEnd[] = [];
     const result: IRestaurantFrontEnd[] = [];
     for (const elem of restaurants) {
@@ -160,8 +160,13 @@ export const getSelectedFilterReq =
     // Filter by categories
     if (filters.categories && filters.categories.length > 0) {
       filteredRestaurants = filteredRestaurants.filter((restaurant) =>
-        restaurant.dishes.some((dish) =>
-          filters.categories?.includes(dish.category.foodGroup))
+        filters.categories.map((category) =>
+          category.toLowerCase()
+        ).some((lowercaseCategory) =>
+          restaurant.dishes.some((dish) =>
+            dish.category.foodGroup.toLowerCase() === lowercaseCategory
+          )
+        )
       );
     }
 
