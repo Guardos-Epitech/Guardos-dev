@@ -6,42 +6,42 @@ import { NavigateTo } from "@src/utils/NavigateTo";
 import { useNavigate } from "react-router-dom";
 
 const MapBackBtn = () => {
-    return createTheme({
-      typography: {
-        button: {
-          fontFamily: "Montserrat",
-          textTransform: "none",
-          fontSize: "1.13rem",
-          fontWeight: "500",
-        },
+  return createTheme({
+    typography: {
+      button: {
+        fontFamily: "Montserrat",
+        textTransform: "none",
+        fontSize: "1.13rem",
+        fontWeight: "500",
       },
-      palette: {
-        primary: {
-          main: "#AC2A37",
-          contrastText: "#ffffff",
-        },
-        secondary: {
-          main: "#094067",
-          contrastText: "#ffffff",
-        },
+    },
+    palette: {
+      primary: {
+        main: "#6d071a",
+        contrastText: "#ffffff",
       },
-      shape: {
-        borderRadius: 5,
+      secondary: {
+        main: "#094067",
+        contrastText: "#ffffff",
       },
-    });
-  };
+    },
+    shape: {
+      borderRadius: 5,
+    },
+  });
+};
 
-  const BackButton = () => {
-    const navigate = useNavigate();
-    return (
-      <div className={styles.DivRect}>
-        <ThemeProvider theme={MapBackBtn()}>
-          <Button variant="contained" sx={{ width: "15.44rem" }} onClick={() => NavigateTo("/", navigate)}>
-            Go To List View
-          </Button>
-        </ThemeProvider>
-      </div>
-    );
-  };
-  
-  export default BackButton;
+const BackButton = () => {
+  const navigate = useNavigate();
+  return (
+    <div className={styles.DivRect}>
+      <ThemeProvider theme={MapBackBtn()}>
+        <Button variant="contained" sx={{ width: "15.44rem" }} onClick={() => NavigateTo("/", navigate)}>
+          Go To List View
+        </Button>
+      </ThemeProvider>
+    </div>
+  );
+};
+
+export default BackButton;
