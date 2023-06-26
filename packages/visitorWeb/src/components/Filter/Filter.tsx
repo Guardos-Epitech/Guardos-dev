@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -6,8 +6,7 @@ import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import { IFilterObject } from "@src/filter/filter";
-import { getAllergens, updateAllergens } from "../../../../backend/src/controllers/userController";
+import { IFilterObject } from "shared/models/filterInterfaces";
 import axios from 'axios';
 import styles from "./Filter.module.scss";
 
@@ -67,7 +66,9 @@ interface allergen {
 }
 
 interface FilterProps {
+  // eslint-disable-next-line
   onChange: Function,
+  // eslint-disable-next-line
   onRangeChange: Function
 }
 
@@ -123,7 +124,7 @@ const Filter = (props: FilterProps) => {
     }
 
     if (user !== null) {
-      let dataStorage = JSON.stringify({
+      const dataStorage = JSON.stringify({
         username: JSON.parse(user).username,
         allergens: JSON.stringify(allergenListChanged)
       });
@@ -189,7 +190,7 @@ const Filter = (props: FilterProps) => {
   useEffect(() => {
     const fetchData = async () => {
       const user = localStorage.getItem('user');
-      let dataStorage = JSON.stringify({
+      const dataStorage = JSON.stringify({
         username: JSON.parse(user).username
       });
 
@@ -338,6 +339,7 @@ const Filter = (props: FilterProps) => {
             <Stack direction="row" spacing={1}>
               {allergens.map((allergen) => {
                 return (
+                    // eslint-disable-next-line react/jsx-key
                   <ThemeProvider theme={GlobalStyle()}>
                     <Chip
                       label={allergen.name}

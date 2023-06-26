@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { NavigateTo } from "@src/utils/NavigateTo";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Layout from "@src/components/Layout/Layout";
+import Layout from "shared/components/Layout/Layout";
 import Header from "@src/components/Header/Header";
 import axios from 'axios';
 import styles from "@src/pages/LoginPage/LoginPage.module.scss";
@@ -30,7 +29,7 @@ const Login = () => {
     e.preventDefault();
     // handle registration logic here
     try {
-      let dataStorage = JSON.stringify({
+      const dataStorage = JSON.stringify({
         username: user.username,
         password: user.password
       });
@@ -93,6 +92,7 @@ const Login = () => {
               Login
             </Button>
             <p className={styles.registerInfo}>
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Don't you have an account yet? Register yourself <a className={styles.registerLink} onClick={() => NavigateTo('/register', navigate, {})}>here</a>.
             </p>
           </form>

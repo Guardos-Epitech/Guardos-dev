@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { NavigateTo } from "@src/utils/NavigateTo";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Layout from "@src/components/Layout/Layout";
+import Layout from "shared/components/Layout/Layout";
 import Header from "@src/components/Header/Header";
 import axios from 'axios';
 import styles from "@src/pages/RegistrationPage/RegistrationPage.module.scss";
@@ -46,7 +46,7 @@ const Register = () => {
     e.preventDefault();
     // handle registration logic here
     try {
-      let dataStorage = JSON.stringify({
+      const dataStorage = JSON.stringify({
         username: user.username,
         password: user.password,
         email: user.email

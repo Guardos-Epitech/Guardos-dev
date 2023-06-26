@@ -4,7 +4,7 @@ import MenuPage from "@src/pages/MenuPage";
 import HomePage from "@src/pages/HomePage";
 import RegistrationPage from "@src/pages/RegistrationPage";
 import LoginPage from "@src/pages/LoginPage";
-import ScrollToTop from "@src/components/ScrollToTop/ScrollToTop";
+import ScrollToTop from "shared/components/ScrollToTop/ScrollToTop";
 
 const MVPRouter = () => {
   return (
