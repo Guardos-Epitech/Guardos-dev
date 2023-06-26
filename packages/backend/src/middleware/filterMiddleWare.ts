@@ -102,7 +102,6 @@ export const handleFilterRequest =
 
 export const getSelectedFilterReq =
   async function (filters: ISearchCommunication) {
-    console.log(filters);
     const filter = new Filter();
     const restaurants = await readAndGetAllRestaurants();
     let filteredRestaurants: IRestaurantBackEnd[] = [];
