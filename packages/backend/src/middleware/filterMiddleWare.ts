@@ -138,7 +138,8 @@ export const getSelectedFilterReq =
         if (restaurant.location.city === undefined) {
           return false;
         }
-        return restaurant.location.city.toLowerCase().includes(filters.location.toLowerCase());
+        return restaurant.location.city.toLowerCase()
+          .includes(filters.location.toLowerCase());
       });
     }
 
@@ -160,12 +161,12 @@ export const getSelectedFilterReq =
     if (filters.categories && filters.categories.length > 0) {
       filteredRestaurants = filteredRestaurants.filter((restaurant) =>
         filters.categories.map((category) =>
-          category.toLowerCase()
-        ).some((lowercaseCategory) =>
-          restaurant.dishes.some((dish) =>
-            dish.category.foodGroup.toLowerCase() === lowercaseCategory
+          category.toLowerCase())
+          .some((lowercaseCategory) =>
+            restaurant.dishes.some((dish) =>
+              dish.category.foodGroup.toLowerCase() === lowercaseCategory
+            )
           )
-        )
       );
     }
 
