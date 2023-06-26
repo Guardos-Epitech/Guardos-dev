@@ -45,40 +45,65 @@ const MapPage = () => {
   }
 
   async function handleFilterChange(obj: ISearchCommunication, check?: any) {
-    const filter: any = {};
-    filter.location = inputFields[1];
-    filter.nameSearch = inputFields[0];
-    filter.rangeSearch = rangeValue;
-    filter.buttons = filterButtons;
-    filter.allergen = allergens;
-    if (obj.allergenList && obj.allergenList.length > 0) {
-      setAllergens(check);
-      filter.allergenList = obj.allergenList;
-    }
-    if (obj.location) {
-      filter.location = obj.location;
-    }
-    if (obj.name) {
-      filter.name = obj.name;
-    }
-    if (obj.rating && obj.rating.length === 2) {
-      filter.rating = {
-        $gte: obj.rating[0],
-        $lte: obj.rating[1]
-      };
+    let location = inputFields[1];
+    let nameSearch = inputFields[0];
+    let rangeSearch = rangeValue;
+    let buttons = filterButtons;
+    let allergen = allergens;
+
+    if (obj.location || obj.name) {
+      location = obj.location;
+      nameSearch = obj.name;
+      setInputFields([obj.name, obj.location]);
     }
     if (obj.range) {
-      filter.range = obj.range;
+      rangeSearch = obj.range;
       setRangeValue(obj.range);
     }
-    if (obj.categories && obj.categories.length > 0) {
-      filter.categories = {
-        $in: obj.categories
-      };
+    if (obj.rating) {
+      setFilterButtons(check);
+      buttons = check;
+    }
+    if (obj.allergenList) {
+      setAllergens(check);
+      allergen = check;
     }
 
-    const inter = await getSelectedFilteredRestos(filter);
-    setFilteredRestaurants(inter);
+    let min = 0;
+    let max = 0;
+    const categoriesSelected = [];
+    const allergenListChanged = [];
+
+    for (let i = 0; i < 5; i++) {
+      if (buttons[i].value == true) {
+        if (min == 0 && max == 0) {
+          min = i + 1;
+          max = i + 1;
+        } else if (max < i + 1) {
+          max = i + 1;
+        }
+      }
+    }
+    for (let i = 5; i < buttons.length; i++) {
+      if (buttons[i].value == true) {
+        categoriesSelected.push(filterButtons[i].name);
+      }
+    }
+    for (let i = 0; i < allergen.length; i++) {
+      if (allergen[i].value) {
+        allergenListChanged.push(allergen[i].name);
+      }
+    }
+
+    const inter: ISearchCommunication = {
+      range: rangeSearch,
+      rating: [min, max],
+      name: nameSearch,
+      location: location,
+      categories: categoriesSelected,
+      allergenList: allergenListChanged
+    }
+    setFilteredRestaurants(await getSelectedFilteredRestos(inter));
   }
 
   return (
