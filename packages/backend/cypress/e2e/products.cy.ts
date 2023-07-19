@@ -23,4 +23,16 @@ describe('BE Product Test', () => {
         expect((response.body)).to.be.an('array');
       });
   });
+
+  // Test for The old stone house Restaurant Products
+  it('should return all products stored for The old stone house Restaurant', () => {
+    cy.request({
+      method: 'GET',
+      url: 'http://localhost:8081/api/products/The old stone house Restaurant'
+    })
+      .then((response) => {
+        expect(response.status).to.eq(200);
+        expect((response.body)).to.be.an('array');
+      });
+  });
 });
