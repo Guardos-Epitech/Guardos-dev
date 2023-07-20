@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { userSchema }
+import { userSchema }
   from '../models/userInterface';
 
 export async function addUser(username: string,
@@ -32,14 +33,16 @@ export async function addUser(username: string,
 }
 
 export async function loginUser(username: string,
-  password: string) {
+  export async function loginUser(username: string,
+    password: string) {
   const UserSchema = mongoose.model('User', userSchema, 'User');
   const userData = await UserSchema.find();
   for (const elem of userData) {
     if ((elem.username === username ||
-      elem.email === username) && elem.password === password) {
-      return true;
-    }
+    if ((elem.username === username ||
+        elem.email === username) && elem.password === password) {
+        return true;
+      }
   }
   return false;
 }
@@ -53,7 +56,10 @@ export async function getAllergens(email: string) {
 
 export async function updateAllergens(email: string, allergens: string) {
   const UserSchema = mongoose.model('User', userSchema, 'User');
-  const userData = await UserSchema.findOneAndUpdate({ email: email },
-    { allergens: JSON.parse(allergens) }, { new: true });
+  const userData = await UserSchema
+    .findOneAndUpdate({ email: email }, {
+      allergens: JSON.
+        parse(allergens)
+    }, { new: true });
   return userData;
 }
