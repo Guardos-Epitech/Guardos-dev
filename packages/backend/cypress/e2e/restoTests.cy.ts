@@ -22,7 +22,7 @@ describe('BE Resto Test', () => {
         })
         .then((response) => {
             expect(response.status).to.eq(200);
-            expect(response.body).to.be.an('array');
+            expect(response.body).to.be.an('IRestaurantFrontEnd');
         });
     });
 
@@ -32,11 +32,9 @@ describe('BE Resto Test', () => {
             method: 'POST',
             url: 'http://localhost:8081/api/restaurants',
             body: {
-                restaurant: {
                     name: 'test restaurant',
                     phoneNumber: '123456789',
                     website: 'www.test.com'
-                }
             }
         })
         .then((response) => {
@@ -51,16 +49,14 @@ describe('BE Resto Test', () => {
             method: 'PUT',
             url: 'http://localhost:8081/api/restaurants/test restaurant',
             body: {
-                restaurant: {
                     name: 'test restaurant',
                     phoneNumber: '987654321',
                     website: 'www.test123.com'
-                }
             }
         })
         .then((response) => {
             expect(response.status).to.eq(200);
-            expect(response.body).to.be.an('array');
+            expect(response.body).to.be.an('IRestaurantBackEnd');
         });
     });
 
