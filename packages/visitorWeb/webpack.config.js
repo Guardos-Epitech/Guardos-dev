@@ -20,18 +20,14 @@ const config = {
   devServer: {
     open: true,
     host: "0.0.0.0",
-    port: 8082,
+    port: 8080,
     historyApiFallback: true
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico",
-      
     }),
-    new MiniCssExtractPlugin(),
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     new DeadCodePlugin({
       patterns: [
         'src/**/*.(js|jsx|css)',
@@ -39,7 +35,11 @@ const config = {
       exclude: [
         '**/*.(stories|spec).(js|jsx)',
       ],
-    })
+    }),
+    new MiniCssExtractPlugin(),
+
+    // Add your plugins here
+    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
   module: {
     rules: [
@@ -69,6 +69,8 @@ const config = {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
       "@src": path.resolve(__dirname, "src/"),
+      "react": path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom")
     },
   },
 };
