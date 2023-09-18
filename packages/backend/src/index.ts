@@ -8,6 +8,7 @@ import login from './routes/login';
 import user from './routes/user';
 import logger from 'morgan';
 import path = require('path');
+import 'dotenv/config';
 
 import basicApiIngredients from './routes/ingredients';
 import { connectDataBase, SUCCEED } from './controllers/connectDataBase';
@@ -17,8 +18,11 @@ import restaurants from './routes/restaurants';
 
 async function main() {
   const app = express();
-  const allowedOrigins = [`${process.env.allowedRW}${process.env.PORTRW}`, `${process.env.allowedVW}${process.env.PORTVW}`];
-
+  const allowedOrigins = [`${process.env.allowedRW}${process.env.PORTRW}`, 
+    `${process.env.allowedVW}${process.env.PORTVW}`];
+  console.log(allowedOrigins, 'azdohiaidaod');
+  console.log(process.env.allowedRW);
+  
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -28,6 +32,8 @@ async function main() {
   app.use(
     cors({
       origin: allowedOrigins,
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     })
   );
 
