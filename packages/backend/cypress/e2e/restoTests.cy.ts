@@ -23,6 +23,7 @@ describe('BE Resto Test', () => {
         .then((response) => {
             expect(response.status).to.eq(200);
             expect(response.body).to.be.an('Object');
+            expect(response.body.name).to.eq('Burger King');
         });
     });
 
@@ -40,6 +41,9 @@ describe('BE Resto Test', () => {
         .then((response) => {
             expect(response.status).to.eq(200);
             expect(response.body).to.be.an('Object');
+            expect(response.body.name).to.eq('test restaurant');
+            expect(response.body.phoneNumber).to.eq('123456789');
+            expect(response.body.website).to.eq('www.test.com');
         });
     });
 
@@ -57,6 +61,9 @@ describe('BE Resto Test', () => {
         .then((response) => {
             expect(response.status).to.eq(200);
             expect(response.body).to.be.an('Object');
+            expect(response.body.name).to.eq('test restaurant');
+            expect(response.body.phoneNumber).to.eq('987654321');
+            expect(response.body.website).to.eq('www.test123.com');
         });
     });
 
