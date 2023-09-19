@@ -12,7 +12,7 @@ describe('DishesPageTest add dish card', () => {
         cy.wait(5000);
         cy.get('.MuiButton-contained').click();
         cy.get('.MuiGrid-grid-sm-5 > .MuiFormControl-root > .MuiFormControl-root >' + 
-        '.MuiInputBase-root > #component-outlined').type('TestDish123');
+        '.MuiInputBase-root > #component-outlined').type('Test Dish');
         cy.get('.MuiGrid-grid-sm-8').eq(0).find('.MuiFormControl-root > .MuiFormControl-root >' + 
         '.MuiInputBase-root > #outlined-multiline-flexible').type('cypress test description');
         cy.get('.MuiGrid-grid-sm-8').eq(1).find('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root > #tags-outlined')
@@ -23,7 +23,7 @@ describe('DishesPageTest add dish card', () => {
         .type('{downarrow}{enter}');
         cy.get('.MuiGrid-grid-sm-8:last').should('exist')
         .find('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root > #tags-outlined')
-        .type('{downarrow}{enter}');
+        .wait(1000).type('{downarrow}').wait(1000).type('{enter}');
         cy.wait(1000);
         cy.get('.MuiButton-contained').click();
         cy.wait(5000);
