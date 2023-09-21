@@ -8,6 +8,7 @@ import login from './routes/login';
 import user from './routes/user';
 import logger from 'morgan';
 import path = require('path');
+import 'dotenv/config';
 
 import basicApiIngredients from './routes/ingredients';
 import { connectDataBase, SUCCEED } from './controllers/connectDataBase';
@@ -17,9 +18,11 @@ import restaurants from './routes/restaurants';
 
 async function main() {
   const app = express();
-  const port = 8081;
-  const allowedOrigins = ['http://localhost:8082', 'http://localhost:8080'];
-
+  const allowedOrigins = [`${process.env.allowedRW}${process.env.PORTRW}`, 
+    `${process.env.allowedVW}${process.env.PORTVW}`];
+  console.log(allowedOrigins, 'azdohiaidaod');
+  console.log(process.env.allowedRW);
+  
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -29,16 +32,17 @@ async function main() {
   app.use(
     cors({
       origin: allowedOrigins,
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     })
   );
 
   if (await connectDataBase() === SUCCEED) {
-    app.listen(port, () => {
-      return console.log(`Backend is listening at http://localhost:${port}`);
+    app.listen(process.env.PORTBE, () => {
+      return console.log(`Backend is listening at http://localhost:${process.env.PORTBE}`);
     });
   }
 
-  app.use('/', basicApiIngredients); // why we have two times basicApiIngredients?
   app.use('/api/products', products);
   app.use('/api/dishes', dishes);
   app.use('/api/restaurants', restaurants);
