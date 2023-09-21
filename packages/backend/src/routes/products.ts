@@ -35,8 +35,10 @@ router.post('/:name', async (req, res) => {
 router.delete('/:name', async (req, res) => {
   const productName = req.params.name;
   if (await deleteProductByName(productName) === true)
-    return res.status(200);
-  return res.status(404);
+    return res.status(200)
+      .send('Product deleted successfully');
+  return res.status(404)
+    .send('Product not found');
 });
 
 export default router;
