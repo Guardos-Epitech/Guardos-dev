@@ -70,8 +70,6 @@ const config = {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
       "@src": path.resolve(__dirname, "src/"),
-      "react": path.resolve(__dirname, "node_modules/react"),
-      "react-dom": path.resolve(__dirname, "node_modules/react-dom")
     },
   },
 };
