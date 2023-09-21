@@ -11,6 +11,7 @@ describe('ProductPageTest add new product', () => {
         cy.visit('http://localhost:8080/products');
         cy.wait(5000);
         cy.get('.MuiButton-contained').click();
+        cy.wait(1000);
         cy.get('.MuiGrid-grid-sm-8').eq(0)
         .find('.MuiFormControl-root > .MuiFormControl-root' +
         '> .MuiInputBase-root > #component-outlined').type('Cypress test Product');
@@ -24,5 +25,13 @@ describe('ProductPageTest add new product', () => {
         cy.get('.MuiButton-contained').click();
         cy.wait(5000);
         cy.contains('Cypress test Product');
+    });
+});
+
+describe('ProductPageTest remove product', () => {
+    it('passes', () => {
+        cy.visit('http://localhost:8080/products');
+        cy.wait(5000);
+        cy.contains('TestCypress');
     });
 });
