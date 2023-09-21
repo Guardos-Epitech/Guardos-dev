@@ -91,6 +91,7 @@ const DishForm = (props: IDishFormProps) => {
     getAllProducts()
       .then((res) => {
         allDishProd = res.map((item: IProduct) => item.name);
+        console.log(allDishProd);
         setProductListTest(allDishProd);
       });
   }, []);

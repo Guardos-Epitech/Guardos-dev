@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { productSchema } from '../models/productsInterfaces';
-import { restaurantSchema } from '../models/restaurantInterfaces';
-import { IProduct } from '../../../shared/models/restaurantInterfaces';
+import {productSchema} from '../models/productsInterfaces';
+import {restaurantSchema} from '../models/restaurantInterfaces';
+import {IProduct} from '../../../shared/models/restaurantInterfaces';
 
 export async function getMaxProductId() {
   const Product = mongoose.model('Product', productSchema);
@@ -124,5 +124,32 @@ export async function addProductsToDB(restaurantId: number, product: IProduct) {
   } catch (error) {
     console.error(`Error while adding product from Restaurant with
      ID: ${restaurantId} to Product collection: `, error);
+  }
+}
+
+export async function getAllProducts() {
+  try {
+    const Product = mongoose.model('Product', productSchema);
+    return await Product.find({});
+  } catch (error) {
+    console.error('Error while fetching all products: ', error);
+    return [];
+  }
+}
+
+export async function deleteProductByName(productName: string) {
+  try {
+    const Product = mongoose.model('Product', productSchema);
+    const existingProduct = await Product.findOne({ name: productName });
+    if (!existingProduct) {
+      console.log('Product not found');
+      return false;
+    }
+    await Product.deleteOne({ name: productName });
+    console.log('Product deleted successfully');
+    return true;
+  } catch (error) {
+    console.error('Error while deleting the product: ', error);
+    return false;
   }
 }
