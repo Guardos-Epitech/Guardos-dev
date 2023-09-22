@@ -20,7 +20,7 @@ describe('ProductPageTest add new product', () => {
         .type('{downarrow}{enter}');
         cy.get('.MuiGrid-grid-sm-8').eq(2)
         .find('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root > #tags-outlined')
-        .wait(1000).type('{downarrow}{enter}');
+        .wait(5000).type('{downarrow}{enter}');
         cy.wait(1000);
         cy.get('.MuiButton-contained').click();
         cy.wait(5000);
