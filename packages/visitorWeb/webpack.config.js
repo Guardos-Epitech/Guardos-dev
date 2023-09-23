@@ -28,7 +28,6 @@ const config = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico",
-      
     }),
     new MiniCssExtractPlugin(),
     new Dotenv(),
@@ -41,7 +40,11 @@ const config = {
       exclude: [
         '**/*.(stories|spec).(js|jsx)',
       ],
-    })
+    }),
+    new MiniCssExtractPlugin(),
+
+    // Add your plugins here
+    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
   module: {
     rules: [
