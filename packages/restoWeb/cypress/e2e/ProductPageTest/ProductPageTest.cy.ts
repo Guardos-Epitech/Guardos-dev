@@ -6,19 +6,6 @@ describe('ProductPageTest check products', () => {
     });
 });
 
-describe('ProductPageTest remove product', () => {
-    it('passes', () => {
-        cy.visit('http://localhost:8080/products');
-        cy.wait(5000);
-        cy.contains('DeleteTest');
-        cy.get('.MuiGrid-root:last > .MuiPaper-root > .FaDRfOJflgeQlItznTpw > .MuiSvgIcon-root').click();
-        cy.wait(1000);
-        cy.get('.MuiGrid-root:last > .MuiPaper-root > .FaDRfOJflgeQlItznTpw >.sc-aXZVg > div').eq(1).get('.sc-gEvEer').eq(0).click();
-        cy.wait(2000);
-        cy.contains('DeleteTest').should('not.exist');
-    });
-});
-
 describe('ProductPageTest add new product', () => {
     it('passes', () => {
         cy.visit('http://localhost:8080/products');
@@ -37,5 +24,18 @@ describe('ProductPageTest add new product', () => {
         cy.wait(1000);
         cy.get('.MuiButton-contained').click();
         cy.contains('This is a success message!');
+    });
+});
+
+describe('ProductPageTest remove product', () => {
+    it('passes', () => {
+        cy.visit('http://localhost:8080/products');
+        cy.wait(5000);
+        cy.contains('CypressTestProduct');
+        cy.get('.MuiGrid-root:last > .MuiPaper-root > .FaDRfOJflgeQlItznTpw > .MuiSvgIcon-root').click();
+        cy.wait(1000);
+        cy.get('.MuiGrid-root:last > .MuiPaper-root > .FaDRfOJflgeQlItznTpw >.sc-aXZVg > div').eq(1).get('.sc-gEvEer').eq(0).click();
+        cy.wait(2000);
+        cy.contains('CypressTestProduct').should('not.exist');
     });
 });

@@ -44,9 +44,11 @@ describe('HomePageTest check resto delete', () => {
   it('passes', () => {
     cy.visit('http://localhost:8080');
     cy.wait(10000);
+    cy.contains('Test128');
     cy.get('.MuiPaper-root:last > .MuiGrid-root > .MuiGrid-root > .ZBzxwzmuADcRDx0LwbIp > .tu9axTq6sjrtLsaZHGQQ > #long-button').click();
-    cy.get('#basic-menu > .MuiPaper-root > .MuiList-root > .MuiButtonBase-root:last').click().trigger('mousedown', 'center');
-    cy.get('.MuiPaper-root:last > .MuiGrid-root > .MuiGrid-root >.ZBzxwzmuADcRDx0LwbIp > .sc-aXZVg > div').eq(1).get('.sc-gEvEer').eq(0).click();
-    cy.contains('This is a success message!'); //cant find line 49
+    cy.get('#basic-menu > .MuiPaper-root > .MuiList-root > .MuiButtonBase-root:last').click();
+    cy.get('.MuiBackdrop-root').click();
+    cy.contains('Confirm').click();
+    cy.contains('Test128').should('not.exist');
   });
 });
