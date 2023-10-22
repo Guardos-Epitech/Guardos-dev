@@ -1,5 +1,3 @@
-import { response } from "express";
-
 describe('BE Resto Test', () => {
 
     // Test for all restaurants
