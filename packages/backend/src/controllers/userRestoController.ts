@@ -33,9 +33,7 @@ export async function addUserResto(username: string,
   if (errorArray.includes(true)) {
     return errorArray;
   }
-  console.log(upload);
   await upload.save();
-  console.log(upload);
   return errorArray;
 }
 
