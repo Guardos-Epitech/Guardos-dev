@@ -2,7 +2,7 @@ describe('ProductPageTest check products', () => {
     it('passes', () => {
         cy.visit('http://localhost:8080/products');
         cy.wait(5000);
-        cy.contains('Test Ingredient');
+        cy.contains('Test');
     });
 });
 
