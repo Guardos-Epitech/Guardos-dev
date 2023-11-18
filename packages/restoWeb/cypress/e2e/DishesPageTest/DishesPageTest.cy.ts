@@ -51,6 +51,7 @@ describe('DishesPageTest edit dish card', () => {
 });
 
 // delete dish
+
 describe('DishesPageTest delete dish card', () => {
     it('passes', () => {
         cy.visit('http://localhost:8080/dishes');
@@ -59,10 +60,9 @@ describe('DishesPageTest delete dish card', () => {
         cy.get('.MuiPaper-root').eq(6).find('.YgFNULgWXmZsCGJKZc5g > .MuiGrid-root > .MuiGrid-root > .ZA6LF0zDIfuiCFc0tcNj > div > #long-button').click();
         cy.contains('Delete').click();
         cy.get('.MuiBackdrop-root').click();
-        cy.wait(2000);
-        cy.get('.MuiPaper-root').eq(2).find('.YgFNULgWXmZsCGJKZc5g > .MuiGrid-root > .MuiGrid-root > .ZA6LF0zDIfuiCFc0tcNj > .sc-aXZVg > div').find('.sc-gEvEer').eq(0).click();
-        //cy.contains('Confirm').click();
+        cy.contains('Confirm').click();
         cy.wait(10000);
         cy.contains('TestDish123').should('not.exist');
     });
 });
+
