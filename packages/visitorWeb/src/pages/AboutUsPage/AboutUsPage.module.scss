@@ -1,27 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Orbitron&display=swap");
 
-// AboutUsPage.scss
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
 .aboutuscontainer {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
   }
   
   .aboutussection {
     margin-bottom: 40px;
+    text-align: center;
   
     h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
+        font-size: 36px;
+        font-weight: 500;
+        margin-bottom: 10px;
     }
   
     .logocontainer {
       display: flex;
       align-items: center;
+      flex-direction: column;
   
       .logo {
-        width: 100px;
-        height: 100px;
+        width: 250px;
+        height: 250px;
         border-radius: 50%;
         background: url(../../assets/logo.png); // Replace with your logo background color or image
         background-size: cover;
@@ -30,14 +44,17 @@
   
       p {
         font-size: 16px;
+        font-weight: 300;
       }
     }
   }
   
   .teamsection {
     h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
+        font-size: 36px;
+        font-weight: 500;
+        margin-bottom: 25px;
+        text-align: center;
     }
   
     .teammembers {
@@ -47,8 +64,8 @@
         margin-right: 20px;
   
         .memberphoto {
-            width: 120px;
-            height: 120px;
+            width: 250px;
+            height: 250px;
             border-radius: 75%;
             position: relative;
             overflow: hidden;
@@ -56,24 +73,34 @@
             align-items: center;
             justify-content: center;
             transition: 0.3s;
-            // background: url(../../assets/profile/josi.png);
             background-size: cover;
   
-          &:hover {
-            opacity: 0.8;
-            filter: brightness(0.8);
-  
-            .memberdescription {
-              opacity: 1;
-            }
-          }
-  
-          .memberdescription {
-            position: absolute;
-            color: #fff;
-            text-align: center;
-            opacity: 0;
-            transition: 0.3s;
+            &:hover {
+                &:before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  background: rgba(0, 0, 0, 0.7); // Adjust the darkness by changing the alpha value
+                  z-index: 1;
+                }
+      
+                .memberdescription {
+                  opacity: 1;
+                  color: #fff;
+                }
+              }
+      
+              .memberdescription {
+                position: absolute;
+                color: #000; // Default text color
+                text-align: center;
+                opacity: 0;
+                transition: 0.3s;
+                z-index: 2;
+                font-weight: 300;
           }
         }
       }

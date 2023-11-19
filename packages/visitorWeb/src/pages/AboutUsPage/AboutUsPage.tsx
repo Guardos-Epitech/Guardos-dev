@@ -12,34 +12,45 @@ const teamMembers = [
     {
       id: 1,
       photo: josi,
-      description: 'Description for team member 1',
+      description: '4th year Epitech student from Germany',
     },
     {
       id: 2,
       photo: gylian,
-      description: 'Description for team member 2',
+      description: '4th year Epitech student from Germany',
     },
     {
         id: 3,
         photo: mark,
-        description: 'Description for team member 3',
+        description: '4th year Epitech student from Germany',
       },
       {
         id: 4,
         photo: ramon,
-        description: 'Description for team member 4',
+        description: '4th year Epitech student from Germany',
       },
       {
         id: 5,
         photo: alban,
-        description: 'Description for team member 5',
+        description: '4th year Epitech student from France',
       },
       {
         id: 6,
         photo: renan,
-        description: 'Description for team member 6',
+        description: '4th year Epitech student from France',
       },
   ];
+
+  const description = `Guardos is your trusted companion in the world of dining, 
+  specially crafted for individuals with food intolerances and specific culinary preferences. 
+  Our innovative platform empowers you to effortlessly discover restaurants in your vicinity 
+  that cater to your unique dietary needs. 
+  Whether you're gluten-free, vegan, or have other dietary restrictions, 
+  Guardos ensures that your dining experience is tailored to your tastes. 
+  Say goodbye to the hassle of searching for suitable options – with Guardos, 
+  finding the perfect restaurant that aligns with your preferences is just a click away. 
+  Enjoy a seamless and delightful dining experience with Guardos, 
+  where your food choices are always respected and celebrated.`
 
 const AboutUsPage = () => {
     return (
@@ -50,7 +61,7 @@ const AboutUsPage = () => {
                     <h2>About Us</h2>
                     <div className={styles.logocontainer}>
                     <div className={styles.logo}></div>
-                    <p>Short description about your company...</p>
+                    <p>{description}</p>
                     </div>
                 </div>
 
