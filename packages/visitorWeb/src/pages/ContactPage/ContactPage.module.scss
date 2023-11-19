@@ -142,7 +142,7 @@
 .contactForm .inputBox textarea:focus ~ span,
 .contactForm .inputBox textarea:valid ~ span
 {
-    color: #e91e63;
+    color: #333;
     font-size: 12px;
     transform: translateY(-20px);
 }
@@ -156,6 +156,22 @@
     cursor: pointer;
     padding: 10px;
     font-size: 18px;
+}
+
+.confirmationPopup 
+{
+    position: fixed;
+    bottom: 10px; 
+    left: 10px;
+    background-color: #4CAF50; 
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+}
+
+.confirmationPopup p {
+    color: #fff; 
+    margin: 0;
 }
 
 @media (max-width: 991px)
