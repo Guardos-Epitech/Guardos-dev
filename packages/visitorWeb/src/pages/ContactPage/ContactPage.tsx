@@ -4,33 +4,57 @@ import Header from "@src/components/Header/Header";
 import PlaceIcon from "@mui/icons-material/Place";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
+import axios from 'axios';
+
+const baseUrl = `${process.env.DB_HOST}${process.env.DB_HOST_PORT}/api/sendEmail/`;
 
 const ContactPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (name && email && message && isValidEmail(email)) {
-            // Add your logic for handling the form data here, for example, sending it to a server or performing some other action
-            console.log('Form submitted:', { name, email, message });
       
-            // Show confirmation popup
-            setShowConfirmation(true);
+        if (name && email && subject && message && isValidEmail(email)) {
+          try {
+            const response = await axios({
+                method: 'POST',
+                url: baseUrl,
+                data: {
+                    name,
+                    email,
+                    subject,
+                    message,
+                  },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
       
-            // Clear the form fields after submission
-            setName('');
-            setEmail('');
-            setMessage('');
+            if (response.status >= 200 && response.status < 300) {
+              console.log('Backend response:', response.data);
       
-            // Hide the confirmation popup after 3 seconds
-            setTimeout(() => {
-              setShowConfirmation(false);
-            }, 3000);
+              setShowConfirmation(true);
+      
+              setName('');
+              setEmail('');
+              setSubject('');
+              setMessage('');
+      
+              setTimeout(() => {
+                setShowConfirmation(false);
+              }, 3000);
+            } else {
+              console.error('Backend responded with an error:', response.data);
+            }
+          } catch (error) {
+            console.error('Error sending data to the backend:', error);
           }
-    };
+        }
+      };
 
     const isValidEmail = (value: string): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -95,6 +119,15 @@ const ContactPage = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                                 <span>Email</span>
+                            </div>
+                            <div className={styles.inputBox}>
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    value={subject}
+                                    onChange={(e) => setSubject(e.target.value)}
+                                />
+                                <span>Subject</span>
                             </div>
                             <div className={styles.inputBox}>
                                 <textarea
