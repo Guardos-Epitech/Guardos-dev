@@ -49,12 +49,19 @@
         background: url(../../assets/logo.png); // Replace with your logo background color or image
         background-size: cover;
         margin-right: 20px;
+        margin-bottom: 20px;
       }
   
       p {
         max-width: 800px;
         font-size: 16px;
         font-weight: 500;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        margin: 0 auto;
+        color: #fff;
       }
     }
   }
@@ -128,6 +135,25 @@
               text-overflow: ellipsis;
             }
           }
+        }
+      }
+      .teamdescription {
+        text-align: center;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+    
+        p {
+          max-width: 800px;
+          font-size: 16px;
+          font-weight: 500;
+          color: #fff;
         }
       }
   }
