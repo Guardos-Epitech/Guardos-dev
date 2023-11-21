@@ -95,7 +95,7 @@ const ContactPage = () => {
                             </div>
                             <div className={styles.text}>
                                 <h3>Email</h3>
-                                <p>contact@guardos.com</p>
+                                <p>guardos-help@outlook.com</p>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@ const ContactPage = () => {
                                 <span>Message:</span>
                             </div>
                             <div className={styles.inputBox}>
-                                <input type="submit" name="" value="Send"></input>
+                                <input type="submit" id="send" name="" value="Send"></input>
                             </div>
                         </form>
                     </div>
