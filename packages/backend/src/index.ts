@@ -5,6 +5,7 @@ import express from 'express';
 import filter from './routes/filter';
 import register from './routes/register';
 import login from './routes/login';
+import logout from './routes/logout';
 import user from './routes/user';
 import images from './routes/images';
 import logger from 'morgan';
@@ -52,7 +53,8 @@ async function main() {
   app.use('/api/register', register);
   app.use('/api/login', login);
   app.use('/api/user', user);
-  app.use('/api/images', images)
+  app.use('/api/images', images);
+  app.use('/api/logout', logout);
   
   // catch 404 and forward to error handler
   app.use(function (next: any) { /* eslint-disable-line */
