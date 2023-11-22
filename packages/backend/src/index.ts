@@ -21,8 +21,7 @@ async function main() {
   const app = express();
   const allowedOrigins = [`${process.env.allowedRW}${process.env.PORTRW}`, 
     `${process.env.allowedVW}${process.env.PORTVW}`];
-  console.log(allowedOrigins, 'azdohiaidaod');
-  console.log(process.env.allowedRW);
+  console.log('allowedOrigins', allowedOrigins);
   
   app.use(logger('dev'));
   app.use(express.json());
@@ -42,17 +41,17 @@ async function main() {
     app.listen(process.env.PORTBE, () => {
       return console.log(`Backend is listening at http://localhost:${process.env.PORTBE}`);
     });
-  }
 
-  app.use('/api/products', products);
-  app.use('/api/dishes', dishes);
-  app.use('/api/restaurants', restaurants);
-  app.use('/api/ingredients', basicApiIngredients);
-  app.use('/api/filter', filter);
-  app.use('/api/register', register);
-  app.use('/api/login', login);
-  app.use('/api/user', user);
-  app.use('/api/images', images)
+    app.use('/api/products', products);
+    app.use('/api/dishes', dishes);
+    app.use('/api/restaurants', restaurants);
+    app.use('/api/ingredients', basicApiIngredients);
+    app.use('/api/filter', filter);
+    app.use('/api/register', register);
+    app.use('/api/login', login);
+    app.use('/api/user', user);
+    app.use('/api/images', images);
+  }
   
   // catch 404 and forward to error handler
   app.use(function (next: any) { /* eslint-disable-line */
