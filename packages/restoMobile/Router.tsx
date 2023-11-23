@@ -39,11 +39,11 @@ const MyTabs = () => {
           },
         })}
       >
+        <Tab.Screen name="Scanning" component={MyStack} />
         <Tab.Screen name="My Restaurants" component={MyRestaurantsScreen} />
         <Tab.Screen name="My Dishes" component={MyDishesScreen} />
         <Tab.Screen name="My Products" component={MyProductsScreen} />
         <Tab.Screen name="Login" component={LoginScreen} />
-        <Tab.Screen name="Scanning" component={MyStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
