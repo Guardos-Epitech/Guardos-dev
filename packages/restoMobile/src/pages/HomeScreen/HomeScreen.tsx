@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, StatusBar, FlatList, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect, useState , useCallback} from 'react';
+import {View, StatusBar, FlatList, TouchableOpacity, Text , RefreshControl} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/Header';
-import AddRestaurantScreen from '../AddRestaurant/AddRestaurant';
 import Card from '../../components/RestaurantCard';
 import axios from 'axios';
 import styles from './HomeScreen.styles';
+import MenuPage from '../MenuPage/MenuPage';
 
 export interface IRestaurantFrontEnd {
   name: string;
@@ -50,6 +50,7 @@ const deleteRestaurantByName = async (restaurantName: string) => {
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [restoData, setRestoData] = useState<IRestaurantFrontEnd[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     updateRestoData();
@@ -80,17 +81,33 @@ const HomeScreen = () => {
     navigation.navigate('AddRestaurant');
   };
 
+  const navigateToMenu = (restaurantId: number, restaurantName: string) => {
+    navigation.navigate('MenuPage', { restaurantId, restaurantName });
+  };
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    updateRestoData();
+    setRefreshing(false);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header label="Guardos" />
       <StatusBar barStyle="dark-content" />
       <FlatList
         data={restoData}
-        renderItem={({ item }) => {
-          return <Card info={item} onDelete={onDelete} />;
-        }}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigateToMenu(item.id, item.name)}>
+            <Card info={item} onDelete={onDelete} />
+          </TouchableOpacity>
+        )}
         keyExtractor={(restaurant) => restaurant.id.toString()}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       <TouchableOpacity
         style={styles.roundButton}

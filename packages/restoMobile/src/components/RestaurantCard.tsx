@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import EditRestaurant from 'src/pages/EditRestaurant/EditRestaurant';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faPen } from '@fortawesome/free-solid-svg-icons/faPen'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import * as Font from 'expo-font';
 import styles from './RestaurantCard.styles';
 import { useNavigation } from '@react-navigation/native';
@@ -11,12 +12,17 @@ const RestaurantCard = ({ info, onDelete }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    async function loadFonts() {
-      await Font.loadAsync({
-        'ionicons': require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf'),
-      });
-      setIsFontLoaded(true);
-    }
+    const loadFonts = async () => {
+      try {
+        await Font.loadAsync({
+          'FontAwesome': require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+        });
+        setIsFontLoaded(true);
+      } catch (error) {
+        console.error('Error loading font:', error);
+        setIsFontLoaded(false);
+      }
+    };
 
     loadFonts();
   }, []);
@@ -26,15 +32,25 @@ const RestaurantCard = ({ info, onDelete }) => {
   };
 
   const handleEdit = () => {
-    console.log(info.name );
-    
+    console.log(info.name);
     navigation.navigate('EditRestaurant', { restaurantId: info.name });
   };
+
+console.log(info.pictures[0]);
+
 
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-        <Image style={styles.imageStyle} source={{ uri: info.pictures[0] }} />
+      <Image
+          style={styles.imageStyle}
+          resizeMode="contain"
+          source={
+            info.pictures[0] === 'empty.jpg'
+              ? require('/Users/duboisrenan/Guardos-dev/packages/restoMobile/src/assets/logo.png')
+              : { uri: info.pictures[0] }
+          }
+        />
         <View style={styles.infoStyle}>
           <Text style={styles.titleStyle} numberOfLines={1} ellipsizeMode="tail">
             {info.name}
@@ -48,10 +64,10 @@ const RestaurantCard = ({ info, onDelete }) => {
         </View>
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={handleDelete} style={styles.iconButton}>
-            <Image source={require('/Users/duboisrenan/Guardos-dev/packages/restoMobile/src/assets/trash.png')} style={styles.icon} />
+            {isFontLoaded && <FontAwesomeIcon icon={ faTrash } size={12} color="gray" />}
           </TouchableOpacity>
           <TouchableOpacity onPress={handleEdit} style={styles.iconButton}>
-            <Image source={require('/Users/duboisrenan/Guardos-dev/packages/restoMobile/src/assets/pen.png')} style={styles.icon} />
+            {isFontLoaded && <FontAwesomeIcon icon={ faPen } size={12} color="gray" />}
           </TouchableOpacity>
         </View>
       </View>
