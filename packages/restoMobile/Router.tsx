@@ -35,8 +35,10 @@ const MyTabs = () => {
               iconName = focused ? 'scan' : 'scan-outline';
             }
 
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons name={iconName} size={size} color={focused ? '#6d071a' : color} />;
           },
+          tabBarActiveTintColor: '#6d071a',
+          tabBarInactiveTintColor: 'gray',
         })}
       >
         <Tab.Screen name="Scanning" component={MyStack} />
