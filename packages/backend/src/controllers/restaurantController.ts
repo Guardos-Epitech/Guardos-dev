@@ -10,12 +10,14 @@ import { IDishBE, IDishFE } from '../../../shared/models/dishInterfaces';
 import { IMealType } from '../../../shared/models/mealTypeInterfaces';
 import { ILocation } from '../../../shared/models/locationInterfaces';
 import { IRestaurantCommunication } from '../models/communicationInterfaces';
+import { rest } from 'cypress/types/lodash';
 
 function createBackEndObj(restaurant: IRestaurantBackEnd) {
   const restaurantBE: IRestaurantBackEnd = {
     name: restaurant.name,
     description: restaurant.description,
     id: restaurant.id,
+    userID: restaurant.userID,
     website: restaurant.website,
     rating: restaurant.rating,
     ratingCount: restaurant.ratingCount,
@@ -81,6 +83,7 @@ function createRestaurantObjFe(
   restaurant: IRestaurantBackEnd) {
   const obj: IRestaurantFrontEnd = {
     name: restaurant.name,
+    userID: restaurant.userID,
     website: restaurant.website,
     description: restaurant.description,
     rating: restaurant.rating,
@@ -146,6 +149,7 @@ export async function getRestaurantByName(restaurantName: string) {
     dishes: rest.dishes as [IDishBE],
     extras: rest.extras as unknown as [IDishBE],
     id: rest.id,
+    userID: rest.userID,
     location: rest.location as ILocation,
     mealType: rest.mealType as [IMealType],
     name: rest.name,
@@ -172,6 +176,7 @@ export async function getAllRestaurants() {
       dishes: restaurant.dishes as [IDishBE],
       extras: restaurant.extras as unknown as [IDishBE],
       id: restaurant._id,
+      userID: restaurant.userID,
       location: restaurant.location as ILocation,
       mealType: restaurant.mealType as [IMealType],
       name: restaurant.name,
@@ -241,6 +246,7 @@ export async function changeRestaurant(
       restaurant.dishes : oldRest.dishes,
     extras: restaurant.extras ? restaurant.extras : oldRest.extras,
     id: oldRest.id,
+    userID: oldRest.userID,
     location: restaurant.location ? restaurant.location : oldRest.location,
     mealType: restaurant.mealType ? restaurant.mealType : oldRest.mealType,
     openingHours: restaurant.openingHours
