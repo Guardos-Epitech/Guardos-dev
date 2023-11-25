@@ -8,22 +8,23 @@ import login from './routes/login';
 import user from './routes/user';
 import images from './routes/images';
 import logger from 'morgan';
+import * as process from 'process';
+import * as dotenv from 'dotenv';
 import path = require('path');
-import 'dotenv/config';
 
 import basicApiIngredients from './routes/ingredients';
 import { connectDataBase, SUCCEED } from './controllers/connectDataBase';
 import dishes from './routes/dishes';
 import products from './routes/products';
 import restaurants from './routes/restaurants';
+import email from './routes/email';
 
 async function main() {
   const app = express();
-  const allowedOrigins = [`${process.env.allowedRW}${process.env.PORTRW}`, 
-    `${process.env.allowedVW}${process.env.PORTVW}`];
-  console.log(allowedOrigins, 'azdohiaidaod');
-  console.log(process.env.allowedRW);
-  
+  dotenv.config();
+  const allowedOrigins = [`${process.env.allowedVW}${process.env.PORTVW}`,
+    `${process.env.allowedRW}${process.env.PORTRW}`];
+
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -40,7 +41,8 @@ async function main() {
 
   if (await connectDataBase() === SUCCEED) {
     app.listen(process.env.PORTBE, () => {
-      return console.log(`Backend is listening at http://localhost:${process.env.PORTBE}`);
+      return console.log(`Backend is listening at
+        http://localhost:${process.env.PORTBE}`);
     });
   }
 
@@ -52,8 +54,9 @@ async function main() {
   app.use('/api/register', register);
   app.use('/api/login', login);
   app.use('/api/user', user);
-  app.use('/api/images', images)
-  
+  app.use('/api/sendEmail', email);
+  app.use('/api/images', images);
+
   // catch 404 and forward to error handler
   app.use(function (next: any) { /* eslint-disable-line */
     next(createError(404));

@@ -52,4 +52,3 @@ export async function loginUserResto(username: string,
   }
   return false;
 }
-

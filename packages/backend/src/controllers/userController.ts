@@ -37,12 +37,10 @@ export async function loginUser(username: string,
   password: string) {
   const UserSchema = mongoose.model('User', userSchema, 'User');
   const userData = await UserSchema.find();
-
   for (const elem of userData) {
-    if ((elem.username === username ||
-      elem.email === username) &&
-      AES.decrypt(elem.password, 'Guardos')
-        .toString(enc.Utf8) === password) {
+    if ((elem.username === username || 
+      elem.email === username) && AES.decrypt(elem.password, 'Guardos')
+      .toString(enc.Utf8) === password) {
       return true;
     }
   }

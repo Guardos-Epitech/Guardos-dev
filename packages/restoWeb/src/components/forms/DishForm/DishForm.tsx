@@ -93,7 +93,6 @@ const DishForm = (props: IDishFormProps) => {
     getAllProducts()
       .then((res) => {
         allDishProd = res.map((item: IProduct) => item.name);
-        console.log(allDishProd);
         setProductListTest(allDishProd);
       });
   }, []);
@@ -256,7 +255,7 @@ const DishForm = (props: IDishFormProps) => {
             </Grid>
             <Grid item xs={4} sm={8} md={12}>
               <FormControl fullWidth>
-                <TextField 
+                <TextField
                   id="outlined-multiline-flexible"
                   label="Description"
                   defaultValue={dishDescription}
