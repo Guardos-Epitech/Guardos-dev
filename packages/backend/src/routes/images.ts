@@ -1,44 +1,25 @@
 import * as express from 'express';
 const router = express.Router();
 import mongoose from 'mongoose';
-import Grid from 'gridfs-stream';
-import fs from 'fs';
-
-import multer from 'multer';
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+import { imageSchema } from '../models/imageInterfaces';
 
 router.get('/', async (_req, res) => {
   return res.status(200)
     .send('Get Images');
 });
 
-router.post('/:name', upload.single('image'), async (req, res) => {
+router.post('/', async (_req, res) => {
+  const body = _req.body;
   try {
-    console.log('req.file:', req.file);
-    // @ts-ignore
-    const gfs = new Grid(mongoose.connection.db, mongoose.mongo);
-    const writeStream = gfs.createWriteStream({
-      filename: req.file.originalname,
-      mode: 'w',
-      // eslint-disable-next-line camelcase
-      content_type: req.file.mimetype,
-    });
-    fs.createReadStream(req.file.path)
-      .pipe(writeStream);
-
-    // @ts-ignore
-    writeStream.on('close', (file) => {
-      fs.unlink(req.file.path, (err) => {
-        if (err) throw err;
-        return res.json({ file });
-      });
-    });
-  } catch (err) {
-    console.error('Error Details:', JSON.stringify(err, null, 2));
+    const newImage = await mongoose.model('Image', imageSchema)
+      .create(body);
+    await newImage.save();
+    return res.status(200)
+      .send('Post Images');
+  } catch (e) {
+    console.error(e);
     return res.status(400)
-      .json({ message: 'Error uploading file', error: err });
+      .send('Error');
   }
 });
 
