@@ -53,3 +53,7 @@ export async function loginUserResto(username: string,
   return false;
 }
 
+export async function getUserIdResto(token: string) 
+{
+  
+}

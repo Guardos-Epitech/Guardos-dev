@@ -10,7 +10,6 @@ import { IDishBE, IDishFE } from '../../../shared/models/dishInterfaces';
 import { IMealType } from '../../../shared/models/mealTypeInterfaces';
 import { ILocation } from '../../../shared/models/locationInterfaces';
 import { IRestaurantCommunication } from '../models/communicationInterfaces';
-import { rest } from 'cypress/types/lodash';
 
 function createBackEndObj(restaurant: IRestaurantBackEnd) {
   const restaurantBE: IRestaurantBackEnd = {
@@ -199,6 +198,7 @@ export async function createNewRestaurant(
   const upload = new RestaurantSchema({
     _id: id,
     name: obj.name,
+    userID: 0,
     phoneNumber: obj.phoneNumber ? obj.phoneNumber : '+1000000000',
     website: obj.website ? obj.website : 'www.default.de',
     rating: 0,
