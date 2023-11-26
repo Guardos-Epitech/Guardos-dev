@@ -8,6 +8,7 @@ router.get('/', async (_req, res) => {
 
 router.post('/', async (_req, res) => {
   try {
+    // TODO: require also restaurant to be able to save images --> store image id as ref to restaurant
     const base64: string = _req.body.image.base64;
     const filename: string = _req.body.image.filename;
     const contentType: string = _req.body.image.contentType;
