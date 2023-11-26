@@ -1,4 +1,4 @@
-import Image from "../models/imageInterfaces";
+import Image from '../models/imageInterfaces';
 
 export function convertToBase64(file: Blob) {
   return new Promise((resolve, reject) => {
@@ -9,15 +9,17 @@ export function convertToBase64(file: Blob) {
   });
 }
 
-export async function saveImageToDB() {
+export async function saveImageToDB(
+  filename: string, contentType: string, size: number, base64: string) {
   try {
+    const newId = await getLatestID();
     const newImage = new Image({
-      _id: 2,
-      filename: 'test',
-      contentType: 'test',
-      size: 1,
+      _id: newId + 1,
+      filename: filename,
+      contentType: contentType,
+      size: size,
       uploadDate: new Date(),
-      base64: 'test',
+      base64: base64
     });
     await newImage.save();
   } catch (e) {
@@ -25,4 +27,22 @@ export async function saveImageToDB() {
     return e;
   }
   return 'success';
+}
+
+function getLatestID(): Promise<number | null> {
+  return new Promise((resolve, reject) => {
+    Image.findOne()
+      .sort({ _id: -1 })
+      .exec()
+      .then(res => {
+        if (res) {
+          resolve(res._id);
+        } else {
+          resolve(null);
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 }
