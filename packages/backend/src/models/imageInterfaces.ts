@@ -1,9 +1,13 @@
 import mongoose from 'mongoose';
 
-export const imageSchema = new mongoose.Schema({
-  gridFsId: mongoose.Schema.Types.ObjectId,
+const imageSchema = new mongoose.Schema({
+  _id: Number,
   filename: String,
   contentType: String,
   size: Number,
   uploadDate: Date,
+  base64: String,
 });
+
+const Image = mongoose.model('Image', imageSchema);
+export default Image;
