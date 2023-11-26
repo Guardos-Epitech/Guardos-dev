@@ -24,7 +24,6 @@ describe('BE Resto Test', () => {
         expect(response.body.name).to.eq('Burger King');
       });
   });
-
   // Test to add restaurant
   it('should add a restaurant', () => {
     cy.request({
