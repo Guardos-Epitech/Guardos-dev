@@ -4,8 +4,10 @@ import {
   addRestoProduct,
   getAllRestoProducts, getRestaurantByName
 } from '../controllers/restaurantController';
-import { changeProductByName, createOrUpdateProduct, deleteProductByName,
-  getAllProducts, getProductByName } from '../controllers/productsController';
+import {
+  changeProductByName, createOrUpdateProduct, deleteProductByName,
+  getAllProducts, getProductByName
+} from '../controllers/productsController';
 
 const router = express.Router();
 
