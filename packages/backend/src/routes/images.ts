@@ -1,6 +1,12 @@
 import * as express from 'express';
-import { saveImageToDB } from '../controllers/imageController';
+import {
+  linkImageToRestaurant,
+  getLatestID,
+  saveImageToDB, linkImageToRestaurantDish, linkImageToRestaurantExtra
+} from '../controllers/imageController';
+import {errorHandlingImage} from '../middleware/imagesMiddleWare';
 const router = express.Router();
+
 router.get('/', async (_req, res) => {
   return res.status(200)
     .send('Get Images');
@@ -9,22 +15,59 @@ router.get('/', async (_req, res) => {
 router.post('/', async (_req, res) => {
   try {
     // TODO: require also restaurant to be able to save images --> store image id as ref to restaurant
-    const base64: string = _req.body.image.base64;
-    const filename: string = _req.body.image.filename;
-    const contentType: string = _req.body.image.contentType;
-    const size: number = _req.body.image.size;
-    if (!base64 || !filename || !contentType || !size) {
+    //const restaurantName: string = _req.body.restaurantName;
+    const dishName: string = _req.body.dish;
+    const extraName: string = _req.body.extra;
+    const error: string = await errorHandlingImage(_req);
+    if (error) {
       return res.status(404)
-        .send('Post Images failed: ' + base64 + filename + contentType + size);
+        .send(error);
     }
-    await saveImageToDB(filename, contentType,  size, base64);
+
+    if (dishName) {
+      await saveImageToDB(
+        _req.body.image.filename,
+        _req.body.image.contentType,
+        _req.body.image.size,
+        _req.body.image.base64);
+
+      const id: number = await getLatestID();
+      await linkImageToRestaurantDish(_req.body.restaurant, dishName, id);
+      console.log('return after dish');
+      return res.status(200)
+        .send('Post Image for dish successfully');
+    }
+
+    if (extraName) {
+      await saveImageToDB(
+        _req.body.image.filename,
+        _req.body.image.contentType,
+        _req.body.image.size,
+        _req.body.image.base64);
+
+      const id: number = await getLatestID();
+      await linkImageToRestaurantExtra(_req.body.restaurant, extraName, id);
+      // save image to restaurant extra
+      return res.status(200)
+        .send('Post Images for extra successfully');
+    }
+
+    await saveImageToDB(
+      _req.body.image.filename,
+      _req.body.image.contentType,
+      _req.body.image.size,
+      _req.body.image.base64);
+    const id: number = await getLatestID();
+    await linkImageToRestaurant(_req.body.restaurant, id);
+    console.log('return after restaurant');
+    return res.status(200)
+      .send('Post Images for restaurant successfully');
+
   } catch (e) {
     console.error(e);
     return res.status(404)
       .send('Post Images failed');
   }
-  return res.status(200)
-    .send('Post Images successfully');
 });
 
 router.delete('/:name', async (_req, res) => {
