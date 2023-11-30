@@ -27,7 +27,6 @@
     "install": "^0.13.0",
     "link": "^1.5.1",
     "react": "18.1.0",
-    "react-ionicons": "^4.2.1",
     "react-native": "0.70.8",
     "react-native-camera": "^4.2.1",
     "react-native-config": "^1.4.11",
