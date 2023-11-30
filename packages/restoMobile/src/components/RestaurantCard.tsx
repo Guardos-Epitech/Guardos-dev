@@ -48,10 +48,10 @@ const RestaurantCard = ({ info, onDelete }) => {
         </View>
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={handleDelete} style={styles.iconButton}>
-            <Image source={require('/Users/duboisrenan/Guardos-dev/packages/restoMobile/src/assets/trash.png')} style={styles.icon} />
+            <Image source={require('../../src/assets/trash.png')} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleEdit} style={styles.iconButton}>
-            <Image source={require('/Users/duboisrenan/Guardos-dev/packages/restoMobile/src/assets/pen.png')} style={styles.icon} />
+            <Image source={require('../../src/assets/pen.png')} style={styles.icon} />
           </TouchableOpacity>
         </View>
       </View>
