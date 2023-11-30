@@ -2,9 +2,14 @@ import * as express from 'express';
 import {
   linkImageToRestaurant,
   getLatestID,
-  saveImageToDB, linkImageToRestaurantDish, linkImageToRestaurantExtra
+  saveImageToDB,
+  linkImageToRestaurantDish,
+  linkImageToRestaurantExtra,
+  unlinkImageFromRestaurantExtra,
+  deleteImageFromDB, unlinkImageFromRestaurantDish, unlinkImageFromRestaurant
 } from '../controllers/imageController';
-import {errorHandlingImage} from '../middleware/imagesMiddleWare';
+import {errorHandlingImage,
+  errorHandlingImageDelete} from '../middleware/imagesMiddleWare';
 
 const router = express.Router();
 
@@ -46,7 +51,6 @@ router.post('/', async (_req, res) => {
 
       const id: number = await getLatestID();
       await linkImageToRestaurantExtra(_req.body.restaurant, extraName, id);
-      // save image to restaurant extra
       return res.status(200)
         .send('Post Images for extra successfully');
     }
@@ -70,8 +74,38 @@ router.post('/', async (_req, res) => {
 });
 
 router.delete('/:name', async (_req, res) => {
-  return res.status(200)
-    .send('Delete Images');
+  try {
+    const dishName: string = _req.body.dish;
+    const extraName: string = _req.body.extra;
+    const error: string = await errorHandlingImageDelete(_req);
+    
+    if (error) {
+      return res.status(404)
+        .send(error);
+    }
+    if (dishName) {
+      await unlinkImageFromRestaurantDish(
+        _req.body.restaurant, _req.body.dish, _req.body.ImageId);
+      await deleteImageFromDB(_req.body.imageId);
+      return res.status(200)
+        .send('Delete Image for dish successfully');
+    }
+    if (extraName) {
+      await unlinkImageFromRestaurantExtra(
+        _req.body.restaurant, _req.body.extra, _req.body.ImageId);
+      await deleteImageFromDB(_req.body.imageId);
+      return res.status(200)
+        .send('Delete Image for extra successfully');
+    }
+    await unlinkImageFromRestaurant(_req.body.restaurant, _req.body.ImageId);
+    await deleteImageFromDB(_req.body.imageId);
+    return res.status(200)
+      .send('Delete Image for restaurant successfully');
+  } catch (e) {
+    console.error(e);
+    return res.status(404)
+      .send('Delete Images failed');
+  }
 });
 
 router.put('/:name', async (_req, res) => {

@@ -33,3 +33,29 @@ export async function errorHandlingImage(_req: Request) {
       return 'Post Images failed: Extra does not exist';
   }
 }
+
+export async function errorHandlingImageDelete(_req: Request) {
+  const restaurantName: string = _req.body.restaurant;
+  const dishName: string = _req.body.dish;
+  const extraName: string = _req.body.extra;
+  const imageId: number = _req.body.imageId;
+
+  if (!restaurantName)
+    return 'Delete Image failed: restaurantName missing';
+  if (!dishName && !extraName)
+    return 'Delete Image failed: dishName or extraName missing';
+
+  if (imageId === undefined || imageId === null || isNaN(Number(imageId))) {
+    return 'Delete Images failed: imageId missing or not a number';
+  }
+
+  if (dishName) {
+    if (await checkIfDishExists(restaurantName, dishName) === false)
+      return 'Delete Images failed: Dish does not exist';
+  }
+  if (extraName) {
+    if (await checkIfExtraExists(restaurantName, extraName) === false)
+      return 'Delete Images failed: Extra does not exist';
+  }
+
+}
