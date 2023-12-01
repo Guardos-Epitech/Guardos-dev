@@ -3,6 +3,7 @@ describe('BE Images Test', () => {
   let latestImageId;
   let latestImageIdEnd;
   let latestImageIdINT = -1;
+
   it('Should get the latest image ID to start tests', () => {
     cy.request({
       method: 'GET',
@@ -48,24 +49,27 @@ describe('BE Images Test', () => {
       });
   });
 
-  //it('Upload should fail because of wrong restaurant', () => {
-  //  cy.request({
-  //    method: 'POST',
-  //    url: 'http://localhost:8081/api/images/',
-  //    body: {
-  //      restaurant: 'RestaurantnotExistsss',
-  //      image: {
-  //        filename: 'CypressAutoTestImage',
-  //        contentType: 'png',
-  //        size: 124,
-  //        base64: 'testimagestring'
-  //      }
-  //    }
-  //  })
-  //    .then((response) => {
-  //      expect(response.status).to.eq(404);
-  //    });
-  //});
+  it('Upload should fail because of wrong restaurant', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'RestaurantnotExistsss',
+        image: {
+          filename: 'CypressAutoTestImage',
+          contentType: 'png',
+          size: 124,
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to
+          .eq('Post Images failed: Restaurant does not exist');
+      });
+  });
 
   it('Should upload image to dish', () => {
     cy.request({
@@ -102,25 +106,27 @@ describe('BE Images Test', () => {
       });
   });
 
-  //it('Upload should fail because of wrong dish', () => {
-  //  cy.request({
-  //    method: 'POST',
-  //    url: 'http://localhost:8081/api/images/',
-  //    body: {
-  //      restaurant: 'McDonaldsTEST',
-  //      dish: 'NOTEXISTING',
-  //      image: {
-  //        filename: 'CypressAutoTestImage',
-  //        contentType: 'png',
-  //        size: 124,
-  //        base64: 'testimagestring'
-  //      }
-  //    }
-  //  })
-  //    .then((response) => {
-  //      expect(response.status).to.eq(404);
-  //    });
-  //});
+  it('Upload should fail because of wrong dish', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        dish: 'NOTEXISTING',
+        image: {
+          filename: 'CypressAutoTestImage',
+          contentType: 'png',
+          size: 124,
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq('Post Images failed: Dish does not exist');
+      });
+  });
   
   it('Should upload image to extra', () => {
     cy.request({
@@ -157,25 +163,135 @@ describe('BE Images Test', () => {
       });
   });
 
-  //  it('Upload should fail because of wrong extra', () => {
-  //    cy.request({
-  //      method: 'POST',
-  //      url: 'http://localhost:8081/api/images/',
-  //      body: {
-  //        restaurant: 'McDonaldsTEST',
-  //        extra: 'abcdef',
-  //        image: {
-  //          filename: 'CypressAutoTestImage',
-  //          contentType: 'png',
-  //          size: 124,
-  //          base64: 'testimagestring'
-  //        }
-  //      }
-  //    })
-  //      .then((response) => {
-  //        expect(response.status).to.eq(404);
-  //      });
-  //  });
+  it('Upload should fail because of wrong extra', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        extra: 'abcdef',
+        image: {
+          filename: 'CypressAutoTestImage',
+          contentType: 'png',
+          size: 124,
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq('Post Images failed: Extra does not exist');
+      });
+  });
+
+  it('Upload should fail because of missing base64', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        extra: 'cheese',
+        image: {
+          filename: 'CypressAutoTestImage',
+          contentType: 'png',
+          size: 124
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq('Post Images failed: base64 missing');
+      });
+  });
+
+  it('Upload should fail because of missing size', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        extra: 'cheese',
+        image: {
+          filename: 'CypressAutoTestImage',
+          contentType: 'png',
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to
+          .eq('Post Images failed: size missing or not a number');
+      });
+  });
+
+  it('Upload should fail because of size as not number', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        extra: 'cheese',
+        image: {
+          filename: 'CypressAutoTestImage',
+          contentType: 'png',
+          size: 'zwölf',
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to
+          .eq('Post Images failed: size missing or not a number');
+      });
+  });
+
+  it('Upload should fail because of missing content type', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        extra: 'cheese',
+        image: {
+          filename: 'CypressAutoTestImage',
+          size: 124,
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq('Post Images failed: contentType missing');
+      });
+  });
+
+  it('Upload should fail because of missing filename', () => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8081/api/images/',
+      failOnStatusCode: false,
+      body: {
+        restaurant: 'McDonaldsTEST',
+        extra: 'cheese',
+        image: {
+          contentType: 'png',
+          size: 124,
+          base64: 'testimagestring'
+        }
+      }
+    })
+      .then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body).to.eq('Post Images failed: filename missing');
+      });
+  });
 
   it('Should get the latest image ID to end tests', () => {
     cy.request({

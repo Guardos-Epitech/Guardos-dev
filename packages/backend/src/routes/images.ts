@@ -37,7 +37,6 @@ router.post('/', async (_req, res) => {
 
       const id: number = await getLatestID();
       await linkImageToRestaurantDish(_req.body.restaurant, dishName, id);
-      console.log('return after dish');
       return res.status(200)
         .send('Post Image for dish successfully');
     }
@@ -62,7 +61,6 @@ router.post('/', async (_req, res) => {
       _req.body.image.base64);
     const id: number = await getLatestID();
     await linkImageToRestaurant(_req.body.restaurant, id);
-    console.log('return after restaurant');
     return res.status(200)
       .send('Post Images for restaurant successfully');
 
@@ -93,7 +91,6 @@ router.delete('/', async (_req, res) => {
     if (extraName) {
       await unlinkImageFromRestaurantExtra(
         _req.body.restaurant, _req.body.extra, _req.body.imageId);
-      console.log('image id: ' + _req.body.imageId);
       await deleteImageFromDB(_req.body.imageId);
       return res.status(200)
         .send('Delete Image for extra successfully');
