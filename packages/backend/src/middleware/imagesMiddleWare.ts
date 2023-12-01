@@ -45,8 +45,18 @@ export async function errorHandlingImageDelete(_req: Request) {
   if (!restaurantName)
     return 'Delete Image failed: restaurantName is missing';
 
+  if (await checkIfRestaurantExists(restaurantName) === false) {
+    return 'Delete Images failed: Restaurant does not exist';
+  }
+
   if (imageId === undefined || imageId === null || isNaN(Number(imageId))) {
     return 'Delete Images failed: imageId missing or not a number';
+  }
+
+  const image = await getImageById(imageId);
+
+  if (!image) {
+    return 'Delete Images failed: Image does not exist';
   }
 
   if (dishName) {

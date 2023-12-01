@@ -124,8 +124,8 @@ router.delete('/', async (_req, res) => {
     const dishName: string = _req.body.dish;
     const extraName: string = _req.body.extra;
     const error: string = await errorHandlingImageDelete(_req);
-    
     if (error) {
+      console.log(error);
       return res.status(404)
         .send(error);
     }
