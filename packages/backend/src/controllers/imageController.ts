@@ -65,7 +65,7 @@ export async function getImageById(id: number) {
       .exec();
   } catch (e) {
     console.error(e);
-    return e;
+    return null;
   }
 }
 

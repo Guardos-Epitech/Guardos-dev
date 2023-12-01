@@ -6,16 +6,58 @@ import {
   linkImageToRestaurantDish,
   linkImageToRestaurantExtra,
   unlinkImageFromRestaurantExtra,
-  deleteImageFromDB, unlinkImageFromRestaurantDish, unlinkImageFromRestaurant
+  deleteImageFromDB, unlinkImageFromRestaurantDish, unlinkImageFromRestaurant, getImageById
 } from '../controllers/imageController';
 import {errorHandlingImage,
   errorHandlingImageDelete} from '../middleware/imagesMiddleWare';
 
 const router = express.Router();
-
+// get image by id or by id array
 router.get('/', async (_req, res) => {
-  return res.status(200)
-    .send('Get Images');
+  try {
+    const imageId: number = _req.body.imageId;
+    const imageIds: number[] = _req.body.imageIds;
+
+    if (!imageIds && !imageId) {
+      return res.status(404)
+        .send('Get Images failed: imageIds or imageId missing');
+    }
+    // if imageId
+    if (imageId) {
+      if (isNaN(Number(imageId))) {
+        return res.status(404)
+          .send('Get Images failed: imageId missing or not a number');
+      }
+      const image = await getImageById(imageId);
+      if (image) {
+        return res.status(200)
+          .send(image);
+      } else {
+        return res.status(404)
+          .send('Get Images failed: Image does not exist');
+      }
+    }
+
+    // if imageIds
+    const images = [];
+    for (const id of imageIds) {
+      if (isNaN(Number(id))) {
+        return res.status(404)
+          .send('Get Images failed: imageId missing or not a number');
+      }
+      const image = await getImageById(id);
+      if (image) {
+        images.push(image);
+      }
+    }
+    return res.status(200)
+      .send(images);
+
+  } catch (e) {
+    console.error(e);
+    return res.status(404)
+      .send('Get Images failed');
+  }
 });
 
 router.post('/', async (_req, res) => {
