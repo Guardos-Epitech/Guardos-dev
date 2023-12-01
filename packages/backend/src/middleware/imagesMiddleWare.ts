@@ -1,6 +1,8 @@
 import {checkIfRestaurantExists} from './restaurantMiddleWare';
 import {Request} from 'express';
 import {checkIfDishExists, checkIfExtraExists} from './dishesMiddelWare';
+import {getImageById} from '../controllers/imageController';
+import {IImage} from '../models/imageInterfaces';
 
 export async function errorHandlingImage(_req: Request) {
   const restaurantName: string = _req.body.restaurant;
@@ -54,5 +56,32 @@ export async function errorHandlingImageDelete(_req: Request) {
   if (extraName) {
     if (await checkIfExtraExists(restaurantName, extraName) === false)
       return 'Delete Images failed: Extra does not exist';
+  }
+}
+
+export async function errorHandlingImageChange(_req: Request){
+  const imageId = _req.body.imageId;
+
+  if (imageId === undefined || imageId === null || isNaN(Number(imageId))) {
+    return 'Change Images failed: imageId missing or not a number';
+  }
+
+  const imageIdTest = await getImageById(imageId) as IImage;
+  const image = _req.body.image as IImage;
+  if (!imageIdTest) {
+    return 'Change Images failed: Image does not exist';
+  }
+  if (!image.base64) {
+    return 'Change Images failed: base64 missing';
+  }
+  if (!image.filename) {
+    return 'Change Images failed: filename missing';
+  }
+  if (!image.contentType) {
+    return 'Change Images failed: contentType missing';
+  }
+  if (image.size === undefined || image.size === null ||
+      isNaN(Number(image.size))) {
+    return 'Change Images failed: size missing or not a number';
   }
 }

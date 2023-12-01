@@ -1,4 +1,4 @@
-import Image from '../models/imageInterfaces';
+import Image, {IImage} from '../models/imageInterfaces';
 import mongoose from 'mongoose';
 import {restaurantSchema} from '../models/restaurantInterfaces';
 
@@ -69,6 +69,23 @@ export async function getImageById(id: number) {
   }
 }
 
+export async function changeImageById(id: number, imageNew: IImage) {
+  try {
+    const imageOld = await getImageById(id);
+    imageOld.filename = imageNew.filename;
+    imageOld.contentType = imageNew.contentType;
+    imageOld.size = imageNew.size;
+    imageOld.uploadDate = new Date();
+    imageOld.base64 = imageNew.base64;
+
+    await imageOld.save();
+    return imageOld;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
 export async function linkImageToRestaurant(
   restaurantName: string, imageId: number) {
   try {
@@ -79,7 +96,6 @@ export async function linkImageToRestaurant(
     }
     rest.picturesId.push(imageId);
     await rest.save();
-    console.log('Image added to restaurant');
   } catch (e) {
     console.error(e);
     return e;
@@ -92,16 +108,12 @@ export async function unlinkImageFromRestaurant(
     const Restaurant = mongoose.model('Restaurant', restaurantSchema);
     const restaurant = await Restaurant.findOne({name: restaurantName});
     if (!restaurant) {
-      console.error('Restaurant not found');
       return null;
     }
     const index = restaurant.picturesId.indexOf(imageId);
     if (index > -1) {
       restaurant.picturesId.splice(index, 1);
       await restaurant.save();
-      console.log('Image removed from restaurant');
-    } else {
-      console.log('Image ID not found in restaurant');
     }
   } catch (e) {
     console.error(e);
@@ -123,7 +135,6 @@ export async function linkImageToRestaurantDish(
     }
     dish.picturesId.push(imageId);
     await rest.save();
-    console.log('Image added to restaurant dish');
   } catch (e) {
     console.error(e);
     return e;
@@ -150,9 +161,6 @@ export async function unlinkImageFromRestaurantDish(
     if (index > -1) {
       dish.picturesId.splice(index, 1);
       await restaurant.save();
-      console.log('Image removed from restaurant dish');
-    } else {
-      console.log('Image ID not found in dish');
     }
   } catch (e) {
     console.error(e);
@@ -180,9 +188,6 @@ export async function linkImageToRestaurantExtra(
     if (index > -1) {
       extra.picturesId.splice(index, 1);
       await restaurant.save();
-      console.log('Image removed from restaurant extra');
-    } else {
-      console.log('Image ID not found in extra');
     }
   } catch (e) {
     console.error(e);
@@ -210,9 +215,6 @@ export async function unlinkImageFromRestaurantExtra(
     if (index > -1) {
       extra.picturesId.splice(index, 1);
       await restaurant.save();
-      console.log('Image removed from restaurant extra');
-    } else {
-      console.log('Image ID not found in extra');
     }
   } catch (e) {
     console.error(e);

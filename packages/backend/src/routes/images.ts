@@ -6,10 +6,16 @@ import {
   linkImageToRestaurantDish,
   linkImageToRestaurantExtra,
   unlinkImageFromRestaurantExtra,
-  deleteImageFromDB, unlinkImageFromRestaurantDish, unlinkImageFromRestaurant, getImageById
+  deleteImageFromDB,
+  unlinkImageFromRestaurantDish,
+  unlinkImageFromRestaurant,
+  getImageById, changeImageById
 } from '../controllers/imageController';
-import {errorHandlingImage,
-  errorHandlingImageDelete} from '../middleware/imagesMiddleWare';
+import {
+  errorHandlingImage,
+  errorHandlingImageChange,
+  errorHandlingImageDelete
+} from '../middleware/imagesMiddleWare';
 
 const router = express.Router();
 // get image by id or by id array
@@ -148,9 +154,24 @@ router.delete('/', async (_req, res) => {
   }
 });
 
-router.put('/:name', async (_req, res) => {
-  return res.status(200)
-    .send('Put Images');
+router.put('/', async (_req, res) => {
+  try {
+    const error: string = await errorHandlingImageChange(_req);
+
+    if (error) {
+      return res.status(404)
+        .send(error);
+    }
+    const image = await changeImageById(_req.body.imageId, _req.body.image);
+    if (image) {
+      return res.status(200)
+        .send(image);
+    }
+  } catch (e) {
+    console.error(e);
+    return res.status(404)
+      .send('Put Images failed');
+  }
 });
 
 router.get('/latestID', async (_req, res) => {
