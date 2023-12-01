@@ -73,7 +73,7 @@ router.post('/', async (_req, res) => {
   }
 });
 
-router.delete('/:name', async (_req, res) => {
+router.delete('/', async (_req, res) => {
   try {
     const dishName: string = _req.body.dish;
     const extraName: string = _req.body.extra;
@@ -85,19 +85,19 @@ router.delete('/:name', async (_req, res) => {
     }
     if (dishName) {
       await unlinkImageFromRestaurantDish(
-        _req.body.restaurant, _req.body.dish, _req.body.ImageId);
+        _req.body.restaurant, _req.body.dish, _req.body.imageId);
       await deleteImageFromDB(_req.body.imageId);
       return res.status(200)
         .send('Delete Image for dish successfully');
     }
     if (extraName) {
       await unlinkImageFromRestaurantExtra(
-        _req.body.restaurant, _req.body.extra, _req.body.ImageId);
+        _req.body.restaurant, _req.body.extra, _req.body.imageId);
       await deleteImageFromDB(_req.body.imageId);
       return res.status(200)
         .send('Delete Image for extra successfully');
     }
-    await unlinkImageFromRestaurant(_req.body.restaurant, _req.body.ImageId);
+    await unlinkImageFromRestaurant(_req.body.restaurant, _req.body.imageId);
     await deleteImageFromDB(_req.body.imageId);
     return res.status(200)
       .send('Delete Image for restaurant successfully');

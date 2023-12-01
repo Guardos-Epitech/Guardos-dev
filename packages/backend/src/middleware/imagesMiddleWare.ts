@@ -41,9 +41,7 @@ export async function errorHandlingImageDelete(_req: Request) {
   const imageId: number = _req.body.imageId;
 
   if (!restaurantName)
-    return 'Delete Image failed: restaurantName missing';
-  if (!dishName && !extraName)
-    return 'Delete Image failed: dishName or extraName missing';
+    return 'Delete Image failed: restaurantName is missing';
 
   if (imageId === undefined || imageId === null || isNaN(Number(imageId))) {
     return 'Delete Images failed: imageId missing or not a number';
@@ -57,5 +55,4 @@ export async function errorHandlingImageDelete(_req: Request) {
     if (await checkIfExtraExists(restaurantName, extraName) === false)
       return 'Delete Images failed: Extra does not exist';
   }
-
 }
