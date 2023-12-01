@@ -93,6 +93,7 @@ router.delete('/', async (_req, res) => {
     if (extraName) {
       await unlinkImageFromRestaurantExtra(
         _req.body.restaurant, _req.body.extra, _req.body.imageId);
+      console.log('image id: ' + _req.body.imageId);
       await deleteImageFromDB(_req.body.imageId);
       return res.status(200)
         .send('Delete Image for extra successfully');
@@ -111,6 +112,18 @@ router.delete('/', async (_req, res) => {
 router.put('/:name', async (_req, res) => {
   return res.status(200)
     .send('Put Images');
+});
+
+router.get('/latestID', async (_req, res) => {
+  try {
+    const id = await getLatestID();
+    return res.status(200)
+      .send(id.toString());
+  } catch (e) {
+    console.error(e);
+    return res.status(404)
+      .send('Get latest ID failed');
+  }
 });
 
 export default router;
