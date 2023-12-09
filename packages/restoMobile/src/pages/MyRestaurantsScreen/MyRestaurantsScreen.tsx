@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect, useState , useCallback} from 'react';
+import { View, FlatList, TouchableOpacity, Text , RefreshControl} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Card from '../../components/RestaurantCard';
 import axios from 'axios';
 import styles from '../MyRestaurantsScreen/MyRestaurantsScreen.styles';
+import MenuPage from '../MenuPage/MenuPage';
 import AddRestaurantScreen from '../AddRestaurantScreen/AddRestaurantScreen';
 
 export interface IRestaurantFrontEnd {
@@ -49,6 +50,7 @@ const deleteRestaurantByName = async (restaurantName: string) => {
 const MyRestaurantsScreen = () => {
   const navigation = useNavigation();
   const [restoData, setRestoData] = useState<IRestaurantFrontEnd[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     updateRestoData();
@@ -65,7 +67,6 @@ const MyRestaurantsScreen = () => {
   };
 
   const onDelete = async (restaurantName: string) => {
-    console.log(restaurantName);
 
     try {
       await deleteRestaurantByName(restaurantName);
@@ -75,18 +76,34 @@ const MyRestaurantsScreen = () => {
     }
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    updateRestoData();
+    setRefreshing(false);
+  }, []);
+
   const navigateToAddRestaurant = () => {
     navigation.navigate('AddRestaurantScreen');
   };
+
+  const navigateToMenu = (restaurantId: number, restaurantName: string) => {
+    navigation.navigate('MenuPage', { restaurantId, restaurantName });
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={restoData}
-        renderItem={({ item }) => {
-          return <Card info={item} onDelete={onDelete} />;
-        }}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigateToMenu(item.id, item.name)}>
+            <Card info={item} onDelete={onDelete} />
+          </TouchableOpacity>
+        )}
         keyExtractor={(restaurant) => restaurant.id.toString()}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       <TouchableOpacity
         style={styles.roundButton}

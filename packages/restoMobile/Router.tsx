@@ -12,13 +12,14 @@ import QRCodeEngin from './src/pages/QRCodeEngin/QRCodeEngin';
 import EditRestaurant from "src/pages/EditRestaurant/EditRestaurant";
 import { LogBox } from 'react-native';
 import AddRestaurant from "src/pages/AddRestaurantScreen/AddRestaurantScreen";
+import MenuPage from 'src/pages/MenuPage/MenuPage';
 import AddRestaurantScreen from 'src/pages/AddRestaurantScreen/AddRestaurantScreen';
 
-LogBox.ignoreLogs(['Warning: ...']);
-LogBox.ignoreAllLogs();
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+LogBox.ignoreLogs(['Warning: ...']);
 
 const MyTabs = () => {
   return (
@@ -72,6 +73,11 @@ const MyStack = () => {
       <Stack.Screen 
         name="AddRestaurantScreen" 
         component={AddRestaurantScreen}
+        options={{ headerShown: false}}
+      />
+      <Stack.Screen 
+        name="MenuPage" 
+        component={MenuPage}
         options={{ headerShown: false}}
       />
       <Stack.Screen 

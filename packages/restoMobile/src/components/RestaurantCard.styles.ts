@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const deviceWidth = Math.round(Dimensions.get('window').width);
 const offset = 40;
@@ -7,7 +7,7 @@ const iconSize = 20;
 
 const styles = StyleSheet.create({
   container: {
-    width: deviceWidth ,
+    width: deviceWidth - 20,
     alignItems: 'center',
     marginTop: 25,
   },
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
+    bottom: 5,
+    right: 5,
     flexDirection: 'row',
   },
   iconButton: {
