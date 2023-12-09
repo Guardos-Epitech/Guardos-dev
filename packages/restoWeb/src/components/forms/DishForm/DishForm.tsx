@@ -58,7 +58,7 @@ interface IDishFormProps {
   selectAllergene?: string[];
   restoName?: string[];
 }
-
+// TODO: on creation of dish, add dish image and send it to backend
 const DishForm = (props: IDishFormProps) => {
   const navigate = useNavigate();
   const [dish, setDish] = useState<string>(props.dishName || "");
@@ -73,8 +73,10 @@ const DishForm = (props: IDishFormProps) => {
   const [invalidResto, setInvalidResto] = useState<boolean>(false);
   const [invalidProducts, setInvalidProducts] = useState<boolean>(false);
   const [invalidCategory, setInvalidCategory] = useState<boolean>(false);
-
-  let {dishDescription, selectAllergene} = props;
+  const [dishDescription, setDishDescription] =
+      useState(props.dishDescription || "");
+  const [selectAllergene, setSelectAllergene] =
+      useState<string[]>(props.selectAllergene || []);
   const imageSrc = props.imageSrc &&
   props.imageSrc.length !== 0 ? props.imageSrc : placeholderImg;
   const [productListTest, setProductListTest] = useState<Array<string>>([]);
@@ -254,14 +256,12 @@ const DishForm = (props: IDishFormProps) => {
             </Grid>
             <Grid item xs={4} sm={8} md={12}>
               <FormControl fullWidth>
-                <TextField
+                <TextField 
                   id="outlined-multiline-flexible"
                   label="Description"
                   defaultValue={dishDescription}
                   multiline
-                  onChange={(e) => {
-                    dishDescription = e.target.value;
-                  }}
+                  onChange={(e) => setDishDescription(e.target.value)}
                 />
               </FormControl>
             </Grid>
@@ -296,9 +296,8 @@ const DishForm = (props: IDishFormProps) => {
                 getOptionLabel={(option) => (option ? (option as string) : "")}
                 defaultValue={selectAllergene}
                 filterSelectedOptions
-                onChange={(e, value) => {
-                  selectAllergene = value.map((allergene: string) => allergene);
-                }}
+                onChange={(e, value) => setSelectAllergene(
+                  value.map((allergene: string) => allergene))}
                 renderInput={(params) => (
                   <TextField
                     {...params}

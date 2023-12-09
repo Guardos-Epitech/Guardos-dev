@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IProduct } from "shared/models/restaurantInterfaces";
+import { IProductFE } from "shared/models/productInterfaces";
 
 const baseUrl = `${process.env.DB_HOST}${process.env.DB_HOST_PORT}/`;
 
@@ -31,6 +32,10 @@ export const getAllProducts = async () => {
 
 export const addNewProduct = async (product: IProduct, restoName: string) => {
   try {
+    if (!product.name) {
+      console.error("Error adding new product:");
+      throw new Error("Failed to add new product");
+    }
     const response = await axios({
       url: baseUrl + "api/products/" + restoName,
       method: "POST",
@@ -38,6 +43,7 @@ export const addNewProduct = async (product: IProduct, restoName: string) => {
         name: product.name,
         ingredients: product.ingredients,
         allergens: product.allergens,
+        resto: restoName,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +59,7 @@ export const addNewProduct = async (product: IProduct, restoName: string) => {
 export const deleteProduct = async (product: any) => {
   try {
     const response = await axios({
-      url: baseUrl + 'api/products/' + product.name,
+      url: baseUrl + "api/products/" + product.name,
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -64,5 +70,22 @@ export const deleteProduct = async (product: any) => {
   } catch (error) {
     console.error("Error deleting product:", error);
     throw new Error("Failed to delete product");
+  }
+};
+
+export const editProduct = async (product: IProductFE, originalProductName: string) => {
+  try {
+    const response = await axios({
+      url: baseUrl + "api/products/" + originalProductName,
+      method: "PUT",
+      data: JSON.stringify(product),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error editing product:", error);
+    throw new Error("Failed to edit product");
   }
 };

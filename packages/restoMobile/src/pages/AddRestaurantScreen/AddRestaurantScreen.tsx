@@ -3,8 +3,8 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert, StatusBar, 
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
-import styles from './AddRestaurant.styles';
-import HomeScreen from "src/pages/HomeScreen/HomeScreen";
+import styles from './AddRestaurantScreen.styles';
+import MyRestaurantsScreen from "src/pages/MyRestaurantsScreen/MyRestaurantsScreen";
 import Header from '../../components/Header';
 
 const AddRestaurantScreen = () => {
@@ -53,7 +53,7 @@ const AddRestaurantScreen = () => {
       setDescription('');
       setWebsite('');
       setImageURL('');
-      navigation.navigate('HomeScreen');
+      navigation.navigate('MyRestaurantsScreen');
     } catch (error) {
       console.error('Error adding restaurant:', error);
       Alert.alert('Error', 'Failed to add restaurant. Please try again.');
@@ -75,9 +75,6 @@ const AddRestaurantScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Header label="Guardos" />
-      <StatusBar barStyle="dark-content" />
-
       <TouchableOpacity style={styles.imageContainer} onPress={pickImage}>
         {imageURL ? (
           <Image source={{ uri: imageURL }} style={styles.image} resizeMode="cover" />

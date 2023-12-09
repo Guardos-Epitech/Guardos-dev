@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, StatusBar, FlatList, TouchableOpacity, Text } from 'react-native';
+import { View, FlatList, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Header from '../../components/Header';
-import AddRestaurantScreen from '../AddRestaurant/AddRestaurant';
 import Card from '../../components/RestaurantCard';
 import axios from 'axios';
-import styles from './HomeScreen.styles';
+import styles from '../MyRestaurantsScreen/MyRestaurantsScreen.styles';
+import AddRestaurantScreen from '../AddRestaurantScreen/AddRestaurantScreen';
 
 export interface IRestaurantFrontEnd {
   name: string;
@@ -47,7 +46,7 @@ const deleteRestaurantByName = async (restaurantName: string) => {
   }
 };
 
-const HomeScreen = () => {
+const MyRestaurantsScreen = () => {
   const navigation = useNavigation();
   const [restoData, setRestoData] = useState<IRestaurantFrontEnd[]>([]);
 
@@ -77,13 +76,10 @@ const HomeScreen = () => {
   };
 
   const navigateToAddRestaurant = () => {
-    navigation.navigate('AddRestaurant');
+    navigation.navigate('AddRestaurantScreen');
   };
-
   return (
     <View style={styles.container}>
-      <Header label="Guardos" />
-      <StatusBar barStyle="dark-content" />
       <FlatList
         data={restoData}
         renderItem={({ item }) => {
@@ -96,10 +92,10 @@ const HomeScreen = () => {
         style={styles.roundButton}
         onPress={navigateToAddRestaurant}
       >
-        <Text style={styles.buttonText}>Add Restaurant</Text>
+        <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default HomeScreen;
+export default MyRestaurantsScreen;
