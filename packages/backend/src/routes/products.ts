@@ -28,6 +28,9 @@ router.get('/:name', async (req, res) => {
 router.post('/:name', async (req, res) => {
   const restaurant = req.params.name;
   const restaurantId = await getRestaurantByName(restaurant);
+  if (!restaurantId)
+    return res.status(404)
+      .send('Restaurant not found');
   const product = await createOrUpdateProduct(req.body, restaurantId.id);
   await addRestoProduct(req.body, restaurant);
   return res.status(200)
