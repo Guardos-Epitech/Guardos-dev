@@ -8,14 +8,14 @@ export async function getMaxProductId() {
   const Product = mongoose.model('Product', productSchema);
   try {
     const product = await Product.find()
-      .sort({ _id: -1 })
+      .sort({_id: -1})
       .limit(1);
     if (product.length === 0) {
       console.log('No products found.');
       return -1;
     }
 
-    const maxProductId = product[0]._id +1;
+    const maxProductId = product[0]._id + 1;
     console.log('Max product id is: ', maxProductId);
     return maxProductId;
   } catch (error) {
@@ -28,7 +28,7 @@ export async function createOrUpdateProduct(product: IProduct,
   restaurantId: number) {
   try {
     const Product = mongoose.model('Product', productSchema);
-    const existingProduct = await Product.findOne({ name: product.name });
+    const existingProduct = await Product.findOne({name: product.name});
 
     if (!existingProduct) {
       const maxProductIdResult = await getMaxProductId();
@@ -64,7 +64,7 @@ export async function addProductsFromRestaurantToOwnDB(restaurantId: number) {
 
     for (const product of restaurant.products) {
       const Product = mongoose.model('Product', productSchema);
-      const existingProduct = await Product.findOne({ name: product.name });
+      const existingProduct = await Product.findOne({name: product.name});
       if (!existingProduct) {
         const maxProductId = await getMaxProductId();
         if (!maxProductId) {
@@ -103,7 +103,7 @@ export async function addProductsToDB(restaurantId: number, product: IProduct) {
       return;
     }
 
-    const existingProduct = await Product.findOne({ name: product.name });
+    const existingProduct = await Product.findOne({name: product.name});
     if (!existingProduct) {
       const maxProductId = await getMaxProductId();
       if (!maxProductId) {
@@ -128,7 +128,8 @@ export async function addProductsToDB(restaurantId: number, product: IProduct) {
   }
 }
 
-export async function getProductByName(productName: string):Promise<IProductBE> {
+export async function getProductByName(productName: string):
+    Promise<IProductBE> {
   try {
     const Product = mongoose.model('Product', productSchema);
     return await Product.findOne({name: productName});
@@ -151,12 +152,12 @@ export async function getAllProducts() {
 export async function deleteProductByName(productName: string) {
   try {
     const Product = mongoose.model('Product', productSchema);
-    const existingProduct = await Product.findOne({ name: productName });
+    const existingProduct = await Product.findOne({name: productName});
     if (!existingProduct) {
       console.log('Product not found');
       return false;
     }
-    await Product.deleteOne({ name: productName });
+    await Product.deleteOne({name: productName});
     console.log('Product deleted successfully');
     return true;
   } catch (error) {
@@ -168,20 +169,23 @@ export async function deleteProductByName(productName: string) {
 export async function updateProduct(product: IProductBE, oldName: string) {
   const Product = mongoose.model('Product', productSchema);
   return Product.findOneAndUpdate(
-    { name: oldName },
+    {name: oldName},
     product,
-    { new: true }
+    {new: true}
   );
 }
 
-export async function changeProductByName(product: IProductBE, oldProductsName:string) {
+export async function changeProductByName(product: IProductBE,
+  oldProductsName: string) {
   const oldProduct = await getProductByName(oldProductsName);
   const newProduct: IProductBE = {
     name: product.name ? product.name : oldProduct.name,
     id: oldProduct.id,
     allergens: product.allergens ? product.allergens : oldProduct.allergens,
-    ingredients: product.ingredients ? product.ingredients : oldProduct.ingredients,
-    restaurantId: product.restaurantId ? product.restaurantId : oldProduct.restaurantId,
+    ingredients: product.ingredients ? product.ingredients :
+      oldProduct.ingredients,
+    restaurantId: product.restaurantId ? product.restaurantId :
+      oldProduct.restaurantId,
   };
   await updateProduct(product, oldProduct.name);
   return newProduct;
