@@ -5,6 +5,7 @@ import express from 'express';
 import filter from './routes/filter';
 import register from './routes/register';
 import login from './routes/login';
+import logout from './routes/logout';
 import user from './routes/user';
 import images from './routes/images';
 import logger from 'morgan';
@@ -43,6 +44,8 @@ async function main() {
       return console.log(`Backend is listening at http://localhost:${process.env.PORTBE}`);
     });
 
+
+    app.use('/api/logout', logout);
     app.use('/api/products', products);
     app.use('/api/dishes', dishes);
     app.use('/api/restaurants', restaurants);
