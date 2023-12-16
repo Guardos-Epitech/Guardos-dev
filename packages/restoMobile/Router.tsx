@@ -49,7 +49,7 @@ const MyTabs = () => {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Scanning" component={MyStack} />
+        <Tab.Screen name="Scanning" component={MyQrStack} />
         <Tab.Screen name="My Restaurants" component={MyRestaurantsScreen} />
         <Tab.Screen name="My Dishes" component={MyDishesScreen} />
         <Tab.Screen name="My Products" component={MyProductStack} />
@@ -59,15 +59,26 @@ const MyTabs = () => {
     </NavigationContainer>
   );
 };
-
-const MyStack = () => {
+const MyQrStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="QRCodeEngin"
+        component={QRCodeEngin}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="AddPage"
         component={AddPage}
         options={{ headerShown: false }}
       />
+    </Stack.Navigator>
+  )
+}
+
+const MyStack = () => {
+  return (
+    <Stack.Navigator>
       <Stack.Screen
         name="MyRestaurantsScreen"
         component={MyRestaurantsScreen}
@@ -87,11 +98,6 @@ const MyStack = () => {
         name="EditRestaurant" 
         component={EditRestaurant}
         options={{ headerShown: false}}
-      />
-      <Stack.Screen
-        name="QRCodeEngin"
-        component={QRCodeEngin}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

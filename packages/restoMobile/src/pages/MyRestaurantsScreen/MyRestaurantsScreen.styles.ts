@@ -7,19 +7,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   roundButton: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
     width: 50,
     height: 50,
-    borderRadius: 50,
-    backgroundColor: 'gray',
+    borderRadius: 25,
+    backgroundColor: '#6d071a',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    right: 20
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 24,
   },
 });
   
