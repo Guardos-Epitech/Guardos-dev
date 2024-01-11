@@ -1,15 +1,19 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import * as Font from 'expo-font';
+import { NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import MyRestaurantsScreen from './src/pages/MyRestaurantsScreen/MyRestaurantsScreen';
 import MyDishesScreen from './src/pages/MyDishesScreen/MyDishesScreen';
 import MyProductsScreen from './src/pages/MyProductsScreen/MyProductsScreen';
+import EditRestaurant from "src/pages/EditRestaurant/EditRestaurant";
+import { LogBox } from 'react-native';
+import AddRestaurant from "src/pages/AddRestaurantScreen/AddRestaurantScreen";
+import MenuPage from 'src/pages/MenuPage/MenuPage';
+import AddRestaurantScreen from 'src/pages/AddRestaurantScreen/AddRestaurantScreen';
 import LoginScreen from './src/pages/ProfileScreen/Login/Login';
 import Register from "./src/pages/ProfileScreen/Register/Register";
-
 import AddPage from './src/pages/AddPage/AddPage';
 import QRCodeEngin from './src/pages/QRCodeEngin/QRCodeEngin';
 import AddProductScreen from './src/pages/AddProductScreen/AddProductScreen';
@@ -17,6 +21,7 @@ import EditProductPage from './src/pages/EditProductPage/EditProductPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+LogBox.ignoreLogs(['Warning: ...']);
 
 const MyTabs = () => {
   return (
@@ -44,7 +49,7 @@ const MyTabs = () => {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Scanning" component={MyStack} />
+        <Tab.Screen name="Scanning" component={MyQrStack} />
         <Tab.Screen name="My Restaurants" component={MyRestaurantsScreen} />
         <Tab.Screen name="My Dishes" component={MyDishesScreen} />
         <Tab.Screen name="My Products" component={MyProductStack} />
@@ -54,19 +59,45 @@ const MyTabs = () => {
     </NavigationContainer>
   );
 };
-
-const MyStack = () => {
+const MyQrStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="QRCodeEngin"
+        component={QRCodeEngin}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="AddPage"
         component={AddPage}
         options={{ headerShown: false }}
       />
+    </Stack.Navigator>
+  )
+}
+
+const MyStack = () => {
+  return (
+    <Stack.Navigator>
       <Stack.Screen
-        name="QRCodeEngin"
-        component={QRCodeEngin}
-        options={{ headerShown: false }}
+        name="MyRestaurantsScreen"
+        component={MyRestaurantsScreen}
+        options={{ headerShown: false}}
+      />
+      <Stack.Screen 
+        name="AddRestaurantScreen" 
+        component={AddRestaurantScreen}
+        options={{ headerShown: false}}
+      />
+      <Stack.Screen 
+        name="MenuPage" 
+        component={MenuPage}
+        options={{ headerShown: false}}
+      />
+      <Stack.Screen 
+        name="EditRestaurant" 
+        component={EditRestaurant}
+        options={{ headerShown: false}}
       />
     </Stack.Navigator>
   );

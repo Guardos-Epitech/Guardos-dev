@@ -28,6 +28,7 @@
     "expo-app-loading": "^2.1.1",
     "expo-barcode-scanner": "~12.1.0",
     "expo-font": "~11.0.1",
+    "expo-image-picker": "^14.5.0",
     "expo-status-bar": "~1.4.2",
     "link": "^1.5.1",
     "react": "^18.1.0",
