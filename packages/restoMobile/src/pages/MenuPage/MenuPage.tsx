@@ -39,9 +39,6 @@ const MenuPage = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Header label="Guardos" />
-      <StatusBar barStyle="dark-content" />
-
       <ImageBackground
         source={{ uri: '/Users/duboisrenan/Guardos-dev/packages/restoMobile/src/assets/foodbg.png' }}
         style={styles.imageBackground}
@@ -51,11 +48,11 @@ const MenuPage = ({ route }) => {
       </ImageBackground>
 
       <FlatList
-        data={dishes[0].dishes} // Adjust the data source based on your actual structure
-        renderItem={renderDishCard}
-        keyExtractor={(item) => item._id.toString()}
-        style={styles.flatList}
-      />
+      data={dishes[0].dishes}
+      renderItem={renderDishCard}
+      keyExtractor={(item) => item[0]._id.toString()}
+      style={styles.flatList}
+    />
     </View>
   );
 };
