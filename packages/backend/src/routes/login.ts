@@ -30,12 +30,10 @@ router.post('/restoWeb', async function (req: Request, res: Response) {
     if (answer) {
       return res.status(200).send(answer);
     } else {
-      return res.status(403)
-        .send('Invalid Access');
+      return res.send('Invalid Access');
     }
   } catch (error) {
-    return res.status(500)
-      .send('An error occurred while processing your request');
+    return res.send('An error occurred while processing your request');
   }
 });
 

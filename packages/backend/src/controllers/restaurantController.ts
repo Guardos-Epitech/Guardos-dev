@@ -153,7 +153,7 @@ export async function getRestaurantByName(restaurantName: string) {
     dishes: rest.dishes as [IDishBE],
     extras: rest.extras as unknown as [IDishBE],
     id: rest.id,
-    userID: rest.userID,
+    userID: rest.userID as number,
     location: rest.location as ILocation,
     mealType: rest.mealType as [IMealType],
     name: rest.name as string,
@@ -180,7 +180,40 @@ export async function getAllRestaurants() {
       description: restaurant.description as string,
       dishes: restaurant.dishes as [IDishBE],
       extras: restaurant.extras as unknown as [IDishBE],
-      userID: restaurant.userID,
+      userID: restaurant.userID as number,
+      id: restaurant._id as number,
+      location: restaurant.location as ILocation,
+      mealType: restaurant.mealType as [IMealType],
+      name: restaurant.name as string,
+      openingHours: restaurant.openingHours as [IOpeningHours],
+      phoneNumber: restaurant.phoneNumber as string,
+      pictures: restaurant.pictures as [string],
+      picturesId: restaurant.picturesId as [number],
+      products: restaurant.products as [IProduct],
+      rating: restaurant.rating as number,
+      ratingCount: restaurant.ratingCount as number,
+      website: restaurant.website as string
+    });
+    answer.push(createRestaurantObjFe(restaurantBE));
+  }
+  return answer;
+}
+
+export async function getAllUserRestaurants(userId : number) {
+  const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+  const restaurants = await Restaurant.find();
+  const answer: [IRestaurantFrontEnd] = [{} as IRestaurantFrontEnd];
+  answer.pop();
+
+  for (const restaurant of await restaurants) {
+    if (userId !== restaurant.userID) {
+      continue;
+    }
+    const restaurantBE = createBackEndObj({
+      description: restaurant.description as string,
+      dishes: restaurant.dishes as [IDishBE],
+      extras: restaurant.extras as unknown as [IDishBE],
+      userID: restaurant.userID as number,
       id: restaurant._id as number,
       location: restaurant.location as ILocation,
       mealType: restaurant.mealType as [IMealType],
