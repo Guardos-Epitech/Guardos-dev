@@ -43,6 +43,7 @@ export interface IRestaurantFrontEnd {
   location: ILocation;
   openingHours: IOpeningHours[];
   pictures: string[];
+  picturesId?: number[];
   hitRate?: number;
   range: number;
   rating: number;
@@ -61,6 +62,7 @@ export interface IRestaurantBackEnd {
   ratingCount: number;
   openingHours: IOpeningHours[];
   pictures: string[];
+  picturesId?: number[];
   description: string;
   dishes: IDishBE[];
   location: ILocation;

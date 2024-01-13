@@ -36,6 +36,9 @@ describe('BE Product Test', () => {
     })
     .then((response) => {
       expect(response.status).to.eq(200);
+      //expect(response.body.name).to.eq('TestProdBE');
+      //expect(response.body.allergens).to.eq('lactose');
+      //expect(response.body.ingredients).to.eq('milk');
     });
   });
 
@@ -44,8 +47,8 @@ describe('BE Product Test', () => {
       method: 'DELETE',
       url: 'http://localhost:8081/api/products/TestProdBE'
     })
-    .then((response) => {
-      expect(response.status).to.eq(200);
-    });
+      .then((response) => {
+        expect(response.status).to.eq(200);
+      });
   });
 });
