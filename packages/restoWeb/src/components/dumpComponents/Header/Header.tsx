@@ -10,7 +10,12 @@ const Header = () => {
 
   return (
     <div className={styles.BackgroundRect}>
-      <span className={styles.NavTitle}>Login</span>
+      <span 
+        className={styles.NavTitle}
+        onClick={() => NavigateTo("/login", navigate)}
+      >
+        Login
+      </span>
       <span
         className={styles.NavTitle}
         onClick={() => NavigateTo("/", navigate)}
