@@ -55,5 +55,5 @@ export async function loginUserResto(username: string,
 
 export async function getUserIdResto(token: string) 
 {
-  
+  return token;
 }

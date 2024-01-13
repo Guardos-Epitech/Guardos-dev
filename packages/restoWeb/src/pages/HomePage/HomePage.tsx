@@ -19,6 +19,7 @@ const HomePage = () => {
   }, []);
 
   const updateRestoData = () => {
+    localStorage.getItem('user');
     getAllResto()
       .then((res) => {
         setRestoData(res);

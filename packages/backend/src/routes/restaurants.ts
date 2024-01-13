@@ -33,12 +33,13 @@ router.post('/', async (req, res) => {
   return res.status(200)
     .send(restaurant);
 });
+
 /*
 router.post('/', async (req, res) => {
   if (!req.body.token) {
     return;
   }
-  //const userID = await getUserID();
+  //const userID = await getUserIdResto();
   const maxID = await findMaxIndexRestaurants();
   const restaurant = await createNewRestaurant(req.body, maxID + 1);
   await addProductsFromRestaurantToOwnDB(restaurant.id);
