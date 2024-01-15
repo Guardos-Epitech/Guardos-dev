@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import FixedBtn
   from "@src/components/dumpComponents/buttons/FixedBtn/FixedBtn";
-import { getAllRestaurants } from "@src/services/restoCalls";
+import { getAllRestaurantsByUser } from "@src/services/restoCalls";
 import {IRestaurantFrontEnd} from "shared/models/restaurantInterfaces";
 import Layout from 'shared/components/Layout/Layout';
 import RestoCard from "@src/components/RestoCard/RestoCard";
@@ -19,7 +19,8 @@ const HomePage = () => {
 
   const updateRestoData = () => {
     const userToken = localStorage.getItem('user');
-    getAllRestaurants(userToken)
+    if (userToken === null) { return; }
+    getAllRestaurantsByUser({ key: userToken })
       .then((res) => {
         setRestoData(res);
       });

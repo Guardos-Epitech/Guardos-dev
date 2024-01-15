@@ -18,7 +18,7 @@ export async function addUserResto(username: string,
     password: AES.encrypt(password, 'GuardosResto')
       .toString(),
     isActive: false,
-    restaurants: []
+    restaurantIDs: []
   });
   const existingUsername = await UserRestoSchema.findOne({ username: username })
     .exec();

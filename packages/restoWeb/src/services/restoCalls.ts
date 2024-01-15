@@ -62,12 +62,12 @@ export const deleteResto = async (restoName: string) => {
   }
 };
 
-export const getAllRestaurants = async (body: any) => {
+export const getAllRestaurantsByUser = async (body: any) => {
   try {
     const response = await axios({
       method: "GET",
       url: baseUrl + 'user/resto',
-      params: { body },
+      params: body,
       headers: {
         "content-type": "application/json",
       },

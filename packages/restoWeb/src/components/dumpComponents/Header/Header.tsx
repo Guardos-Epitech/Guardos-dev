@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import logo from "@src/assets/logo.png";
 import { NavigateTo } from "@src/utils/NavigateTo";
+import { checkIfTokenIsValid } from '../../../services/userCalls';
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -13,23 +14,37 @@ const Header = () => {
   function logoutUser() {
     localStorage.removeItem('user');
     setLoggedIn(false);
-    NavigateTo('/', navigate, {})
+    NavigateTo('/', navigate)
   }
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
+  const checkUserToken = async () => {
+    try {
+      const userToken = localStorage.getItem('user');
 
-    if (userData !== null) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-      localStorage.removeItem('user');
+      if (userToken === null) {
+        setLoggedIn(false);
+        return;
+      }
+      const isUserTokenValid = await checkIfTokenIsValid({ key: userToken });
+
+      if (isUserTokenValid === 'OK') {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+        localStorage.removeItem('user');
+      }
+    } catch (error) {
+      console.error('Error fetching login data:', error);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    checkUserToken();
+  }, [navigate]);
 
   return (
-    <div className={styles.BackgroundRect}>
-      <span className={styles.NavTitle}>
+    <div className={loggedIn ? styles.BackgroundRectLoggedIn : styles.BackgroundRectLoggedOut}>
+      <span className={loggedIn ? styles.NavTitle : styles.NavTitleLogIn }>
         { loggedIn ? (
           <a onClick={logoutUser}>
             Logout
@@ -40,25 +55,41 @@ const Header = () => {
           </a>
         )}
       </span>
-      <span
+      { loggedIn 
+        &&
+        <span
         className={styles.NavTitle}
         onClick={() => NavigateTo("/", navigate)}
-      >
-        My Restaurants
-      </span>
+        >
+          My Restaurants
+        </span>
+      }
       <img className={styles.LogoImg} src={logo} alt="Logo" />
-      <span
+      { !loggedIn 
+        &&
+        <div
+        className={styles.NavTitle}
+        >
+        </div>
+      }
+      { loggedIn 
+        &&
+        <span
         className={styles.NavTitle}
         onClick={() => NavigateTo("/dishes", navigate)}
-      >
-        My Dishes
-      </span>
-      <span
+        >
+          My Dishes
+        </span>
+      }
+      { loggedIn 
+        &&
+        <span
         className={styles.NavTitle}
         onClick={() => NavigateTo("/products", navigate)}
-      >
-        My Products
-      </span>
+        >
+          My Products
+        </span>
+      }
     </div>
   );
 };

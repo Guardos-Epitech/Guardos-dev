@@ -199,16 +199,13 @@ export async function getAllRestaurants() {
   return answer;
 }
 
-export async function getAllUserRestaurants(userId : number) {
+export async function getAllUserRestaurants(loggedInUserId : number) {
   const Restaurant = mongoose.model('Restaurant', restaurantSchema);
-  const restaurants = await Restaurant.find();
+  const restaurants = await Restaurant.find({ userID: loggedInUserId });
   const answer: [IRestaurantFrontEnd] = [{} as IRestaurantFrontEnd];
   answer.pop();
 
   for (const restaurant of await restaurants) {
-    if (userId !== restaurant.userID) {
-      continue;
-    }
     const restaurantBE = createBackEndObj({
       description: restaurant.description as string,
       dishes: restaurant.dishes as [IDishBE],

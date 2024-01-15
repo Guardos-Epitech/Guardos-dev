@@ -40,7 +40,8 @@ router.post('/', async (req, res) => {
 
 router.get('/user/resto', async (req, res) => {
   try {
-    const userID = await getUserIdResto(String(req.query.body));
+    const userToken = String(req.query.key);
+    const userID = await getUserIdResto(userToken);
     
     if (userID === false) {
       // If user ID is not found, return 404 Not Found
