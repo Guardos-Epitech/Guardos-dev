@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+
 import styles from "./MyAccountPage.module.scss";
+import Style from "ol/style/Style";
 
 const MyAccountPage = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
-  const [allergens, setAllergens] = useState('');
+  const [allergens, setAllergens] = useState([]);
   const [picture, setPicture] = useState('');
   const [watchedRestaurants, setWatchedRestaurants] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handlePictureChange = (e : any) => {
     setPicture(e.target.value);
@@ -25,8 +32,8 @@ const MyAccountPage = () => {
     setCity(e.target.value);
   };
 
-  const handleAllergensChange = (e : any) => {
-    setAllergens(e.target.value);
+  const handleSelectChange = (event : any) => {
+    setSelectedOptions(event.target.value);
   };
 
   const handleAddRestaurant = () => {
@@ -51,29 +58,37 @@ const MyAccountPage = () => {
         </div>
         <div>
           <label>Email:</label>
-          <input type="text" value={email} onChange={handleEmailChange} />
+          <input type="text" value={email} onChange={handleEmailChange} required/>
         </div>
         <div>
           <label>Name:</label>
-          <input type="text" value={name} onChange={handleNameChange} />
+          <input type="text" value={name} onChange={handleNameChange} required/>
         </div>
         <div>
           <label>City:</label>
           <input type="text" value={city} onChange={handleCityChange} />
         </div>
         <div>
-          <label>Allergens:</label>
-          <select value={allergens} onChange={handleAllergensChange}>
-            <option value="">Select...</option>
-            <option value="peanut">Peanut</option>
-            <option value="gluten">Gluten</option>
-            <option value="dairy">Dairy</option>
-          </select>
+        <FormControl fullWidth className={styles.allergenInput}>
+          <InputLabel id="allergens-label">Allergens</InputLabel>
+          <Select
+            labelId="allergens-label"
+            id="allergens"
+            multiple
+            value={selectedOptions}
+            onChange={handleSelectChange}
+            label="Allergens"
+          >
+            <MenuItem value="peanut">Peanut</MenuItem>
+            <MenuItem value="gluten">Gluten</MenuItem>
+            <MenuItem value="dairy">Dairy</MenuItem>
+          </Select>
+        </FormControl>
         </div>
-        <button onClick={handleAddRestaurant}>Add Watched Restaurant</button>
+        <button onClick={handleAddRestaurant}>Apply Change</button>
       </div>
       <div className={styles.restaurantSection}>
-        <h2>Last Watched Restaurants</h2>
+        <h1>Last Watched Restaurants</h1>
         <ul>
           {watchedRestaurants.map((restaurant, index) => (
             <li key={index}>
