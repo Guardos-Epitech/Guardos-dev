@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import FixedBtn
   from "@src/components/dumpComponents/buttons/FixedBtn/FixedBtn";
 import { getAllRestaurantsByUser } from "@src/services/restoCalls";
+import { NavigateTo } from "@src/utils/NavigateTo";
 import {IRestaurantFrontEnd} from "shared/models/restaurantInterfaces";
 import Layout from 'shared/components/Layout/Layout';
 import RestoCard from "@src/components/RestoCard/RestoCard";
@@ -13,9 +15,7 @@ import SuccessAlert
 const HomePage = () => {
   const [restoData, setRestoData] = useState<IRestaurantFrontEnd[]>([]);
   const [isUserTokenSet, setIsUserTokenSet] = useState<Boolean>(false);
-
-  const textNotLoggedIn = "Please login/register to see your restaurants";
-  const textLoggedIn = "You have currently no active restaurant. You can click on the button in the lower right corner to add a new one."
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateRestoData();
@@ -23,7 +23,6 @@ const HomePage = () => {
 
   const updateRestoData = () => {
     const userToken = localStorage.getItem('user');
-    
     if (userToken === null) {
       setIsUserTokenSet(false);
       return;
@@ -35,6 +34,11 @@ const HomePage = () => {
       });
   };
 
+  document.addEventListener('loggedOut', function( ) {
+    setRestoData([]);
+    setIsUserTokenSet(false);
+  });
+
   return (
     <div>
       <div className={styles.RectOnImg}>
@@ -45,12 +49,12 @@ const HomePage = () => {
           <div>
             { isUserTokenSet && restoData.length == 0 && (
               <p>
-                {textLoggedIn}
+                You have currently no active restaurant. You can click on the button in the lower right corner to add a new one.
               </p>
             )}
             { !isUserTokenSet && (
               <p>
-                {textNotLoggedIn}
+                Please <a onClick={() => NavigateTo('/login', navigate, {})}>login</a> to see your restaurants
               </p>
             )}
             {restoData.map((restaurant, index) => {

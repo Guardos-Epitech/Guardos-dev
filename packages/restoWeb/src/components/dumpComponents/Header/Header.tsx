@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 import logo from "@src/assets/logo.png";
@@ -10,10 +10,16 @@ import styles from "./Header.module.scss";
 const Header = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isLogInSite, setIsLogInSite] = useState(false);
+
+  const usePathPattern = useLocation();
 
   function logoutUser() {
+    const event = new Event('loggedOut');
     localStorage.removeItem('user');
+    setIsLogInSite(false);
     setLoggedIn(false);
+    document.dispatchEvent(event);
     NavigateTo('/', navigate)
   }
 
@@ -39,19 +45,34 @@ const Header = () => {
   };
 
   useEffect(() => {
+    if (usePathPattern.pathname === "/login") {
+      setIsLogInSite(true);
+    }
     checkUserToken();
   }, [navigate]);
 
   return (
     <div className={loggedIn ? styles.BackgroundRectLoggedIn : styles.BackgroundRectLoggedOut}>
-      <span className={loggedIn ? styles.NavTitle : styles.NavTitleLogIn }>
-        { loggedIn ? (
+      <span className={loggedIn ? styles.NavTitle : styles.NavTitleLogIn}>
+        { loggedIn && (
           <a onClick={logoutUser}>
             Logout
           </a>
-        ) : (
-          <a onClick={() => NavigateTo('/login', navigate, {})}>
+        )}
+        { !loggedIn && !isLogInSite && (
+          <a onClick={() => {
+            setIsLogInSite(true);
+            NavigateTo('/login', navigate, {})
+            }}>
             Login
+          </a>
+        )}
+        { !loggedIn && isLogInSite && (
+          <a onClick={() => {
+            setIsLogInSite(false);
+            NavigateTo('/', navigate, {})
+            }}>
+            Home
           </a>
         )}
       </span>
