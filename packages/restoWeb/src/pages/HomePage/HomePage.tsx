@@ -66,7 +66,9 @@ const HomePage = () => {
           </div>
         </div>
       </Layout>
-      <FixedBtn title="Add Restaurant" redirect="/addResto" />
+      { isUserTokenSet && (
+        <FixedBtn title="Add Restaurant" redirect="/addResto" />
+      )}
       <SuccessAlert />
     </div>
   );
