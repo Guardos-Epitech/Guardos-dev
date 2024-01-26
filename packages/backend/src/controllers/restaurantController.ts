@@ -16,6 +16,7 @@ function createBackEndObj(restaurant: IRestaurantBackEnd) {
     name: restaurant.name,
     description: restaurant.description,
     id: restaurant.id,
+    userID: restaurant.userID,
     website: restaurant.website,
     rating: restaurant.rating,
     ratingCount: restaurant.ratingCount,
@@ -84,6 +85,7 @@ function createRestaurantObjFe(
   restaurant: IRestaurantBackEnd) {
   const obj: IRestaurantFrontEnd = {
     name: restaurant.name,
+    userID: restaurant.userID,
     website: restaurant.website,
     description: restaurant.description,
     rating: restaurant.rating,
@@ -151,6 +153,7 @@ export async function getRestaurantByName(restaurantName: string) {
     dishes: rest.dishes as [IDishBE],
     extras: rest.extras as unknown as [IDishBE],
     id: rest.id,
+    userID: rest.userID as number,
     location: rest.location as ILocation,
     mealType: rest.mealType as [IMealType],
     name: rest.name as string,
@@ -177,6 +180,37 @@ export async function getAllRestaurants() {
       description: restaurant.description as string,
       dishes: restaurant.dishes as [IDishBE],
       extras: restaurant.extras as unknown as [IDishBE],
+      userID: restaurant.userID as number,
+      id: restaurant._id as number,
+      location: restaurant.location as ILocation,
+      mealType: restaurant.mealType as [IMealType],
+      name: restaurant.name as string,
+      openingHours: restaurant.openingHours as [IOpeningHours],
+      phoneNumber: restaurant.phoneNumber as string,
+      pictures: restaurant.pictures as [string],
+      picturesId: restaurant.picturesId as [number],
+      products: restaurant.products as [IProduct],
+      rating: restaurant.rating as number,
+      ratingCount: restaurant.ratingCount as number,
+      website: restaurant.website as string
+    });
+    answer.push(createRestaurantObjFe(restaurantBE));
+  }
+  return answer;
+}
+
+export async function getAllUserRestaurants(loggedInUserId : number) {
+  const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+  const restaurants = await Restaurant.find({ userID: loggedInUserId });
+  const answer: [IRestaurantFrontEnd] = [{} as IRestaurantFrontEnd];
+  answer.pop();
+
+  for (const restaurant of await restaurants) {
+    const restaurantBE = createBackEndObj({
+      description: restaurant.description as string,
+      dishes: restaurant.dishes as [IDishBE],
+      extras: restaurant.extras as unknown as [IDishBE],
+      userID: restaurant.userID as number,
       id: restaurant._id as number,
       location: restaurant.location as ILocation,
       mealType: restaurant.mealType as [IMealType],
@@ -201,6 +235,7 @@ export async function createNewRestaurant(
   const upload = new RestaurantSchema({
     _id: id,
     name: obj.name,
+    userID: 0,
     phoneNumber: obj.phoneNumber ? obj.phoneNumber : '+1000000000',
     website: obj.website ? obj.website : 'www.default.de',
     rating: 0,
@@ -249,6 +284,7 @@ export async function changeRestaurant(
       restaurant.dishes : oldRest.dishes,
     extras: restaurant.extras ? restaurant.extras : oldRest.extras,
     id: oldRest.id,
+    userID: oldRest.userID,
     location: restaurant.location ? restaurant.location : oldRest.location,
     mealType: restaurant.mealType ? restaurant.mealType : oldRest.mealType,
     openingHours: restaurant.openingHours
