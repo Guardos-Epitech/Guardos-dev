@@ -8,6 +8,7 @@ import {
   changeProductByName, createOrUpdateProduct, deleteProductByName,
   getAllProducts, getProductByName, getProductsByUser
 } from '../controllers/productsController';
+import {getUserIdResto} from '../controllers/userRestoController';
 
 const router = express.Router();
 

@@ -9,7 +9,6 @@ export interface IProductBE {
 
 export interface IProductFE {
   name: string;
-  userID: number;
   id: number;
   allergens: string[];
   ingredients: string[];

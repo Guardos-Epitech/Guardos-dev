@@ -4,6 +4,7 @@ import { ICategoryFE } from '../../../shared/models/categoryInterfaces';
 import { IDishBE, IDishFE } from '../../../shared/models/dishInterfaces';
 import { IDishesCommunication } from '../models/communicationInterfaces';
 import { restaurantSchema } from '../models/restaurantInterfaces';
+import {getAllUserRestaurants} from './restaurantController';
 
 export async function getDishesByRestaurantName(restaurantName: string) {
   const Restaurant = mongoose.model('Restaurant', restaurantSchema);
@@ -18,9 +19,7 @@ export async function getDishByName(restaurantName: string, dishName: string) {
 }
 
 export async function getDishByUser(loggedInUserId: number) {
-  const Restaurant = mongoose.model('Restaurant', restaurantSchema);
-  const restaurants = await Restaurant.find();
-  // const restaurants = await getAllUserRestaurants(loggedInUserId);
+  const restaurants = await getAllUserRestaurants(loggedInUserId);
   const dishes: IDishFE[] = [];
   for (const rest of restaurants) {
     for (const dish of rest.dishes) {

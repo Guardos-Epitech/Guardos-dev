@@ -35,7 +35,7 @@ export const getProductsByUser = async (userToken: string) => {
     const response = await axios({
       method: "GET",
       url: baseUrl + "api/products" + "/user/product",
-      params: JSON.stringify({key: userToken}),
+      params: {key: userToken},
       headers: {
         "content-type": "application/json",
       },
@@ -45,7 +45,7 @@ export const getProductsByUser = async (userToken: string) => {
     console.error("Error fetching all products from user:", error);
     throw new Error("Failed to fetch all products from user");
   }
-}
+};
 
 export const addNewProduct = async (product: IProduct, restoName: string) => {
   try {

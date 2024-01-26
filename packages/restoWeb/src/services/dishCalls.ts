@@ -19,7 +19,7 @@ export const getDishesByUser = async (userToken: string) => {
   try {
     const response = await axios({
       method: "GET",
-      params: JSON.stringify({key: userToken}),
+      params: {key: userToken},
       url: baseUrl + 'user/dish',
       headers: {
         "content-type": "application/json",
