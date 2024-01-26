@@ -9,6 +9,7 @@ import ScrollToTop from "shared/components/ScrollToTop/ScrollToTop";
 import ContactPage from "@src/pages/ContactPage/ContactPage";
 import AboutUsPage from "@src/pages/AboutUsPage/AboutUsPage";
 import AppOutlet from "@src/pages/AppOutlet";
+import MyAccountPage from "@src/pages/MyAccountPage";
 
 const MVPRouter = () => {
   return (
@@ -23,6 +24,7 @@ const MVPRouter = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about-us" element={<AboutUsPage />} />
+          <Route path="/my-account" element={<MyAccountPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
