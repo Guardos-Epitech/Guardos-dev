@@ -118,6 +118,7 @@ function createRestaurantObjFe(
       dishes: [{} as IDishFE]
     };
     categories.dishes.pop();
+    obj.dishes.pop();
     for (const dish of restaurant.dishes) {
       if (dish.category.menuGroup === x.name) {
         const dishObj: IDishFE = {
@@ -136,6 +137,7 @@ function createRestaurantObjFe(
           products: dish.products
         };
         categories.dishes.push(dishObj);
+        obj.dishes.push(dishObj);
       }
     }
     obj.categories.push(categories);
