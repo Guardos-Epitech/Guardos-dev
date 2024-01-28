@@ -50,7 +50,7 @@ const MyTabs = () => {
         })}
       >
         <Tab.Screen name="Scanning" component={MyQrStack} />
-        <Tab.Screen name="My Restaurants" component={MyRestaurantsScreen} />
+        <Tab.Screen name="My Restaurants" component={MyStack} />
         <Tab.Screen name="My Dishes" component={MyDishesScreen} />
         <Tab.Screen name="My Products" component={MyProductStack} />
         <Tab.Screen name="Login" component={LoginScreen} />
@@ -63,14 +63,14 @@ const MyQrStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="QRCodeEngin"
-        component={QRCodeEngin}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name="AddPage"
         component={AddPage}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="QRCodeEngin"
+        component={QRCodeEngin}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   )
