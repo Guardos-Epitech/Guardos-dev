@@ -78,7 +78,7 @@ export async function logoutUserResto(token: string) {
 export async function getUserIdResto(token: string) {
   const UserRestoSchema = mongoose.model('UserResto', userRestoSchema, 'UserResto');
   const userData = await UserRestoSchema.find();
-
+  
   for (const elem of userData) {
     let tokenToCheck = elem.username ? elem.username : elem.email;
     tokenToCheck += AES.decrypt(elem.password, 'GuardosResto')

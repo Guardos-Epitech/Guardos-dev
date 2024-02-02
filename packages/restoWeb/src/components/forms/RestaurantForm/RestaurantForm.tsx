@@ -141,6 +141,12 @@ const RestaurantForm = (props: IRestaurantFormProps) => {
   }
 
   async function sendRequestAndGoBack() {
+    let userToken = localStorage.getItem('user');
+
+    if (!userToken) {
+      return;
+    }
+
     const resto = {
       name: restaurantName,
       phoneNumber: phone,
@@ -153,7 +159,8 @@ const RestaurantForm = (props: IRestaurantFormProps) => {
         postalCode: postalCode,
         city: city,
         country: country
-      }
+      },
+      userToken: userToken
     };
 
     if (props.add) {

@@ -232,12 +232,12 @@ export async function getAllUserRestaurants(loggedInUserId : number) {
 }
 
 export async function createNewRestaurant(
-  obj: IRestaurantCommunication, id: number) {
+  obj: IRestaurantCommunication, id: number, userID: number) {
   const RestaurantSchema = mongoose.model('Restaurants', restaurantSchema);
   const upload = new RestaurantSchema({
     _id: id,
     name: obj.name,
-    userID: 0,
+    userID: userID,
     phoneNumber: obj.phoneNumber ? obj.phoneNumber : '+1000000000',
     website: obj.website ? obj.website : 'www.default.de',
     rating: 0,
