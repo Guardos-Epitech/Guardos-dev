@@ -37,6 +37,7 @@ export interface IRestaurantCommunication {
   mealType?: IMealType[];
   extras?: IDishBE[];
   products?: IProduct[];
+  userToken?: string;
 }
 
 //Communication object for BE and FE
