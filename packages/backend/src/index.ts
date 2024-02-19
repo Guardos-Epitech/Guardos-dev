@@ -17,6 +17,7 @@ import dishes from './routes/dishes';
 import products from './routes/products';
 import restaurants from './routes/restaurants';
 import email from './routes/email';
+import review from './routes/review';
 
 async function main() {
   const app = express();
@@ -53,6 +54,7 @@ async function main() {
     app.use('/api/user', user);
     app.use('/api/images', images);
     app.use('/api/sendEmail', email);
+    app.use('/api/review', review);
   }
   
   // catch 404 and forward to error handler
